@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { MenuIcon } from '../icons/icons'
+import { MenuIcon } from '../artwork/icons'
 import Menu from '../components/Menu'
 
 const MenuBtnOpen = styled.button`
     position: fixed;
     margin: 0;
     padding: 0;
-    right: 50%;
-    height: 25px;
-    width: 25px;
+    top: calc(2em + 5px);
+    right: calc(50% + 2rem);
     display: flex;
     justify-content: center;
     align-items: center;
