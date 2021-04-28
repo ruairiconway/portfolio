@@ -5,13 +5,17 @@ import Menu from '../components/Menu'
 
 const MenuBtnOpen = styled.button`
     position: fixed;
-    margin: 0;
+    top: 0;
+    right: 50%;
+    margin: 2rem;
     padding: 0;
-    top: calc(2em + 5px);
-    right: calc(50% + 2rem);
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media all and (max-width: 500px) {
+        right: 2rem;
+    }
 `
 
 export default function MenuContainer() {

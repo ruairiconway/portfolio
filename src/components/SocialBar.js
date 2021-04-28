@@ -3,10 +3,16 @@ import styled from 'styled-components'
 import { EmailIcon, LinkedInIcon, GitHubIcon } from '../artwork/icons'
 
 const SocialWrapper = styled.div`
-    display: flex;
-    flex-flow: row nowrap;
+    ${({ stacked }) => stacked ? 
+        `display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;`
+        :
+        `display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;`
+    }
     width: 100%;
-    justify-content: space-between;
     margin: 2em 0;
 `
 
@@ -18,9 +24,9 @@ const SocialBtn = styled.button`
     align-items: center;
 `
 
-export default function SocialBar({ labelled = false }) {
+export default function SocialBar({ labelled = false, stacked = false }) {
     return(
-        <SocialWrapper>
+        <SocialWrapper stacked={stacked}>
             <SocialBtn>
                 {labelled && <p>Email</p>}
                 <EmailIcon />
