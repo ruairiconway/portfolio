@@ -8,7 +8,7 @@ const Hero = styled.div`
     width: 50%;
     height: 100vh;
 
-    @media all and (max-width: 500px) {
+    @media all and (max-width: 1025px) {
         display: none;
     }
 `
@@ -22,7 +22,7 @@ const HeadlineWrapper = styled.div`
 `
 
 const Headline = styled.h2`
-    font-size: 2rem;
+    color: blue;
 `
 
 export default function HeroContainer() {
@@ -30,7 +30,7 @@ export default function HeroContainer() {
         <Hero>
             <HeadlineWrapper>
                 <Headline>RUA</Headline>
-                <Headline>IRI</Headline>
+                <Headline>IR&Iacute;</Headline>
                 <Headline>CON</Headline>
                 <Headline>WAY</Headline>
             </HeadlineWrapper>

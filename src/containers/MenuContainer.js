@@ -12,9 +12,10 @@ const MenuBtnOpen = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 
-    @media all and (max-width: 500px) {
-        right: 2rem;
+    @media all and (max-width: 1025px) {
+        right: 0;
     }
 `
 

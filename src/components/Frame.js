@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { FrameContext } from '../context/FrameContext'
+import { FrameContext } from '../contexts/FrameContext'
+import { ColorContext } from '../contexts/ColorContext'
 
 const Border = styled.div`
     position: fixed;
@@ -8,11 +9,12 @@ const Border = styled.div`
     right: 0;
     width: ${({ frameScrolled }) => frameScrolled ? '50%' : '100%'};
     height: 100%;
-    border: blue 5px solid;
+    border: ${({ ranColor }) => ranColor} 5px solid;
     background: none;
-    transition: 1s;
+    transition: 0.5s;
+    z-index: -1;
 
-    @media all and (max-width:500px) {
+    @media all and (max-width: 1025px) {
         width: 100%;
     }
 `
@@ -20,8 +22,9 @@ const Border = styled.div`
 export default function Frame() {
 
     const { frameScrolled } = useContext(FrameContext)
+    const { ranColor } = useContext(ColorContext)
 
     return (
-        <Border frameScrolled={frameScrolled} />
+        <Border frameScrolled={frameScrolled} ranColor={ranColor} />
     )
 }
