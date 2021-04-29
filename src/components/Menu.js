@@ -8,7 +8,7 @@ import MenuLinks from './MenuLinks'
 
 const MenuWrapper = styled.div`
     position: fixed;
-    right: calc(50% - 5px);
+    right: calc(50% - 10px);
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-end;
