@@ -3,14 +3,14 @@ const ColorContext = React.createContext()
 
 function ColorContextProvider({ children, ...prevProps }) {
 
-    const [ ranColor, setRanColor ] = useState('#000000')
+    const [ ranColor, setRanColor ] = useState('#0000FF')
 
     function generateRanColor() {
-        let colorHex = '#'
-        while ( colorHex.length < 7 ) {
-            colorHex += (Math.round(Math.random() * 15)).toString(16)
-        }
-        setRanColor(colorHex)
+        // let colorHex = '#'
+        // while ( colorHex.length < 7 ) {
+        //     colorHex += (Math.round(Math.random() * 15)).toString(16)
+        // }
+        setRanColor('#0000FF')
     }
 
     return (
