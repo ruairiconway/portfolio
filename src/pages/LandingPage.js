@@ -8,16 +8,26 @@ import TextLink from '../components/TextLink'
 const LandingWrapper = styled.div`
     position: relative;
     display: grid;
-    grid: repeat(5, 1fr) / repeat(4, 1fr);
+    grid: repeat(5, 1fr) / repeat(2, 1fr) repeat(2, auto);
     grid-template-areas:
         "count . . ."
         ". . social social"
         "name name . ."
-        ". . lead lead"
+        ". lead lead lead"
         ". scroll scroll ."
     ;
     height: 100%;
     width: 100%;
+
+    @media all and (max-width: 550px) {
+        grid-template-areas:
+            "count . . ."
+            ". . . social"
+            "name name name name"
+            "lead lead lead lead"
+            "scroll scroll scroll scroll"
+        ; 
+    } 
 `
 
 const LandingItem = styled.div`
@@ -28,9 +38,16 @@ const LandingItem = styled.div`
         p {
             margin: 1rem 0;
         }
+        @media all and (max-width: 1025px) {
+            justify-self: center;
+        }
     `}
     ${({ type }) => type === 'name' && `
         justify-self: center;
+        @media all and (max-width: 550px) {
+            justify-self: start;
+            align-self: center;
+        }
     `}
 `
 
@@ -43,6 +60,9 @@ const LandingAside = styled.p`
         font-family: 'Spectral', serif;
         font-weight: 400;
         color: lightgrey;
+        @media all and (max-width: 550px) {
+            display: none;
+        }
 `
 
 export default function LandingPage() {

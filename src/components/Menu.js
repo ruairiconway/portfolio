@@ -16,15 +16,15 @@ const MenuWrapper = styled.div`
     min-width: 250px;
     background: white;
     border: solid ${({ ranColor }) => ranColor};
-    border-width: ${({ frameScrolled }) => frameScrolled ? '5px 0 5px 5px' : '0 5px 5px 5px' };
+    border-width: ${({ frameScrolled }) => frameScrolled ? '10px 0 10px 10px' : '0 10px 10px 10px' };
     transform: translateY(${({ menuActive }) => menuActive ? '0' : '-100%' });
     visibility: ${({ menuActive}) => menuActive ? 'visibile' : 'hidden' };
     transition: 0.5s;
     z-index: 2;
 
-    @media all and (max-width: 500px) {
+    @media all and (max-width: 1025px) {
         right: 0;
-        border-width: 0px 0px 5px 5px;
+        border-width: 0px 0px 10px 10px;
     }
 
     a {

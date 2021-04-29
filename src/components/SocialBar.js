@@ -19,6 +19,10 @@ const SocialWrapper = styled.div`
     }
     width: 100%;
     margin: 2rem 0;
+
+    @media all and (max-width: 550px) {
+        margin: ${({ stacked }) => stacked ? `0` : `2rem 0` };
+    }
 `
 
 const SocialBtn = styled.button`
@@ -76,6 +80,12 @@ const SocialBtn = styled.button`
             color: #FFF;
         }
     }
+
+    @media all and (max-width: 550px) {
+        div {
+            margin: 0;
+        }
+    }
 `
 
 const Icon = styled.div`
@@ -90,6 +100,10 @@ const SocialLabel = styled.p`
     color: lightgrey;
     line-height: 0;
     transition: 0.5s;
+
+    @media all and (max-width: 550px) {
+        display: none;
+    }
 `
 
 export default function SocialBar({ labelled = false, stacked = false }) {
