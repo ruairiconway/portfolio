@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import TextLink from './TextLink'
 
 const LinksWrapper = styled.div`
 
 `
-const Link = styled.a`
+const Link = styled.div`
     display: block;
     margin: 2rem 0;
     text-align: right;
@@ -21,9 +22,9 @@ const Link = styled.a`
 export default function MenuLinks() {
     return (
         <LinksWrapper>
-            <Link href='#'>Work</Link>
-            <Link href='#'>About</Link>
-            <Link href='#'>Contact</Link>
+            <Link><TextLink to='#'>Work</TextLink></Link>
+            <Link><TextLink to='#'>About</TextLink></Link>
+            <Link><TextLink to='#'>Contact</TextLink></Link>
         </LinksWrapper>
     )
 }
