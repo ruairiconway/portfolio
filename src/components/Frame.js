@@ -9,7 +9,7 @@ const Border = styled.div`
     right: 0;
     width: ${({ frameScrolled }) => frameScrolled ? '50%' : '100%'};
     height: 100%;
-    border: ${({ ranColor }) => ranColor} 5px solid;
+    border: ${({ ranColor }) => ranColor} 10px solid;
     background: none;
     transition: 0.5s;
     z-index: -1;
