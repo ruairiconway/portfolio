@@ -26,7 +26,7 @@ const ScrollWrapper = styled.div`
     @media all and (max-width: 550px) {
         grid-template: auto / repeat(3, 1fr);
         grid-template-areas:
-            "arrow-1 scroll ."; 
+            ". scroll ."; 
     }
 `
 
@@ -36,11 +36,7 @@ const ScrollItem = styled.div`
     ${({ type }) => type === 'scroll' ? null : `&:hover { transform: translateY(3px); }`}
 
     @media all and (max-width: 500px) {
-        ${({ type }) => {
-            if (type === 'arrow-2' || type === 'arrow-3') {
-                return 'display: none;'
-            }
-        }}
+        ${({ type }) => type.includes('arrow') && 'display: none;'}
     }
 `
 

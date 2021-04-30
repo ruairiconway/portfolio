@@ -21,9 +21,9 @@ const LandingWrapper = styled.div`
     width: 100%;
 
     @media all and (max-width: 550px) {
-        grid: repeat(2, 1fr) auto auto auto / repeat(2, auto) repeat(2, auto);
+        grid: 1fr auto 2fr 2fr 1fr / repeat(2, auto) repeat(2, auto);
         grid-template-areas:
-            "count headline headline headline"
+            "count . . ."
             ". headline headline headline"
             "name name name name"
             "lead lead lead lead"
@@ -46,7 +46,7 @@ const LandingItem = styled.div`
             transform: translateX(1.25rem);
 
             div {
-                padding: 2rem 0;
+                padding: 0;
             }
 
             h2 {
@@ -94,8 +94,7 @@ const LandingAside = styled.p`
         color: lightgrey;
 
         @media all and (max-width: 550px) {
-            // display: none;
-            bottom: 40%;
+            display: none;
         }
 `
 
