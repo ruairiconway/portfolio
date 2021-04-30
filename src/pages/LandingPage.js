@@ -42,7 +42,9 @@ const LandingItem = styled.div`
     `}
 
     ${({ type }) => type === 'headline' && `
+        display: none;
         @media all and (max-width: 550px) {
+            display: block;
             transform: translateX(1.25rem);
 
             div {
