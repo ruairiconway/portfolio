@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { ColorContext } from '../contexts/ColorContext'
 import { EmailIcon, LinkedInIcon, GitHubIcon } from '../artwork/icons'
 
 const SocialWrapper = styled.div`
@@ -42,7 +41,7 @@ const SocialBtn = styled.button`
     transition: 0.5s;
 
     svg path {
-        fill: ${({ ranColor }) => ranColor};
+        fill: var(--ranColor);
         transition: 0.5s;
     }
 
@@ -61,7 +60,7 @@ const SocialBtn = styled.button`
     &:hover,
     &:focus {
         div {
-            background: ${({ ranColor }) => ranColor};
+            background: var(--ranColor);
         }
         svg path {
             fill: #FFF;
@@ -72,7 +71,7 @@ const SocialBtn = styled.button`
     }
 
     &:active {
-        background: ${({ ranColor }) => ranColor};
+        background: var(--ranColor);
         svg path {
             fill: #000;
         }
@@ -107,24 +106,21 @@ const SocialLabel = styled.p`
 `
 
 export default function SocialBar({ labelled = false, stacked = false }) {
-
-    const { ranColor } = useContext(ColorContext)
-
     return(
         <SocialWrapper stacked={stacked}>
-            <SocialBtn type='email' ranColor={ranColor} labelled={labelled}>
+            <SocialBtn type='email' labelled={labelled}>
                 {labelled && <SocialLabel>Email</SocialLabel>}
                 <Icon>
                     <EmailIcon />
                 </Icon>
             </SocialBtn>
-            <SocialBtn type='linkedin' ranColor={ranColor} labelled={labelled}>
+            <SocialBtn type='linkedin' labelled={labelled}>
                 <Icon>
                     <LinkedInIcon />
                 </Icon>
                 {labelled && <SocialLabel>LinkedIn</SocialLabel>}
             </SocialBtn>
-            <SocialBtn type='github' ranColor={ranColor} labelled={labelled}>
+            <SocialBtn type='github' labelled={labelled}>
                 <Icon>
                     <GitHubIcon />
                 </Icon>

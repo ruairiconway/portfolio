@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { FrameContext } from '../contexts/FrameContext'
-import { ColorContext } from '../contexts/ColorContext'
 import { CloseIcon } from '../artwork/icons'
 import SocialBar from './SocialBar'
 import MenuLinks from './MenuLinks'
@@ -15,7 +14,7 @@ const MenuWrapper = styled.div`
     padding: 2rem;
     min-width: 250px;
     background: white;
-    border: solid ${({ ranColor }) => ranColor};
+    border: var(--ranColor) solid;
     border-width: ${({ frameScrolled }) => frameScrolled ? '10px 0 10px 10px' : '0 10px 10px 10px' };
     transform: translateY(${({ menuActive }) => menuActive ? '0' : '-100%' });
     visibility: ${({ menuActive}) => menuActive ? 'visibile' : 'hidden' };
@@ -43,13 +42,13 @@ const MenuBtnClose = styled.button`
     transition: 0.5s;
 
     svg path {
-        fill: ${({ ranColor }) => ranColor};
+        fill: var(--ranColor);
         transition: 0.5s;
     }
 
     &:hover,
     &:focus {
-        background: ${({ ranColor }) => ranColor};
+        background: var(--ranColor);
         svg path {
             fill: #FFF;
         }
@@ -65,15 +64,13 @@ const MenuBtnClose = styled.button`
 export default function Menu({ menuActive, setMenuActive }) {
 
     const { frameScrolled } = useContext(FrameContext)
-    const { ranColor } = useContext(ColorContext)
 
     return(
         <MenuWrapper 
             menuActive={menuActive}
             frameScrolled={frameScrolled}
-            ranColor={ranColor}
         >
-            <MenuBtnClose onClick={() => setMenuActive(!menuActive)} ranColor={ranColor}>
+            <MenuBtnClose onClick={() => setMenuActive(!menuActive)}>
                 <CloseIcon />
             </MenuBtnClose>
             <SocialBar />

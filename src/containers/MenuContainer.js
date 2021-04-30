@@ -1,6 +1,5 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { ColorContext } from '../contexts/ColorContext'
 import { MenuIcon } from '../artwork/icons'
 import Menu from '../components/Menu'
 
@@ -24,13 +23,13 @@ const MenuBtnOpen = styled.button`
     }
 
     svg path {
-        fill: ${({ ranColor }) => ranColor};
+        fill: var(--ranColor);
         transition: 0.5s;
     }
 
     &:hover,
     &:focus {
-        background: ${({ ranColor }) => ranColor};
+        background: var(--ranColor);
         svg path {
             fill: #FFF;
         }
@@ -46,11 +45,10 @@ const MenuBtnOpen = styled.button`
 export default function MenuContainer() {
 
     const [ menuActive, setMenuActive ] = useState(false)
-    const { ranColor } = useContext(ColorContext)
 
     return (
         <>
-            <MenuBtnOpen onClick={() => setMenuActive(!menuActive)} ranColor={ranColor}>
+            <MenuBtnOpen onClick={() => setMenuActive(!menuActive)}>
                 <MenuIcon />
             </MenuBtnOpen>
             <Menu menuActive={menuActive} setMenuActive={setMenuActive} />

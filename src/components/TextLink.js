@@ -1,12 +1,11 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { ColorContext } from '../contexts/ColorContext'
 
 const Link = styled.a`
     position: relative;
     font-style: italic;
     text-decoration: none;
-    color: ${({ ranColor }) => ranColor};
+    color: var(--ranColor);
     padding: 0 4px;
     transition: 0.5s;
 
@@ -17,7 +16,7 @@ const Link = styled.a`
         bottom: 0;
         height: 2px;
         width: 100%;
-        background: ${({ ranColor }) => ranColor};
+        background: var(--ranColor);
         transition: 0.2s;
         z-index: -1;
     }
@@ -39,14 +38,8 @@ const Link = styled.a`
 `
 
 export default function TextLink({ to, children }) {
-
-    const { ranColor } = useContext(ColorContext)
-
     return (
-        <Link
-            href={to}
-            ranColor={ranColor}
-        >
+        <Link href={to}>
             {children}
         </Link>
     )

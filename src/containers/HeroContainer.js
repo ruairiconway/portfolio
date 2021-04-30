@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { ColorContext } from '../contexts/ColorContext'
 
 const Hero = styled.div`
     position: fixed;
@@ -21,7 +20,7 @@ const HeadlineWrapper = styled.div`
     align-items: flex-end;
     height: 100%;
     padding: 2rem;
-    color: ${({ ranColor }) => ranColor};
+    color: var(--ranColor);
     transition: 0.5s;
 `
 
@@ -30,12 +29,9 @@ const Headline = styled.h2`
 `
 
 export default function HeroContainer() {
-
-    const { ranColor } = useContext(ColorContext)
-
     return (
         <Hero>
-            <HeadlineWrapper ranColor={ranColor}>
+            <HeadlineWrapper>
                 <Headline>RUA</Headline>
                 <Headline>IR&Iacute;</Headline>
                 <Headline>CON</Headline>

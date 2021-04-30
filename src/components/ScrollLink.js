@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { ColorContext } from '../contexts/ColorContext'
 import { ArrowDownIcon } from '../artwork/icons'
 import TextLink from './TextLink'
 
@@ -21,7 +20,7 @@ const ScrollWrapper = styled.div`
     transition: 0.5s;
 
     svg path {
-        fill: ${({ ranColor }) => ranColor};
+        fill: var(--ranColor);
         transition: 0.5s;
     }
 `
@@ -35,10 +34,8 @@ const ScrollItem = styled.div`
 
 export default function ScrollLink() {
 
-    const { ranColor } = useContext(ColorContext)
-
     return (
-        <ScrollWrapper ranColor={ranColor}>
+        <ScrollWrapper>
             <ScrollItem area='scroll'>
                 <TextLink to='#'>Scroll</TextLink>
             </ScrollItem>
