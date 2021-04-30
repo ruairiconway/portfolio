@@ -7,10 +7,9 @@ const ScrollWrapper = styled.div`
     display: grid;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
     grid-template-areas:
-        "t-left t-center t-right"
-        "m-left scroll m-right"
-        "b-left b-center b-right"
-    ;
+        "arrow-1 . ."
+        ". scroll arrow-3"
+        ". arrow-2 .";
     justify-items: center;
     align-items: center;
     width: 100%;
@@ -23,29 +22,42 @@ const ScrollWrapper = styled.div`
         fill: var(--ranColor);
         transition: 0.5s;
     }
+
+    @media all and (max-width: 550px) {
+        grid-template: auto / repeat(3, 1fr);
+        grid-template-areas:
+            "arrow-1 scroll ."; 
+    }
 `
 
 const ScrollItem = styled.div`
-    grid-area: ${({ area }) => area};
+    grid-area: ${({ type }) => type};
     transition: 0.25s;
+    ${({ type }) => type === 'scroll' ? null : `&:hover { transform: translateY(3px); }`}
 
-    ${({ area }) => area === 'scroll' ? null : `&:hover { transform: translateY(3px); }`}
+    @media all and (max-width: 500px) {
+        ${({ type }) => {
+            if (type === 'arrow-2' || type === 'arrow-3') {
+                return 'display: none;'
+            }
+        }}
+    }
 `
 
 export default function ScrollLink() {
 
     return (
         <ScrollWrapper>
-            <ScrollItem area='scroll'>
+            <ScrollItem type='scroll'>
                 <TextLink to='#'>Scroll</TextLink>
             </ScrollItem>
-            <ScrollItem area='t-left'>
+            <ScrollItem type='arrow-1'>
                 <ArrowDownIcon />
             </ScrollItem>
-            <ScrollItem area='b-center'>
+            <ScrollItem type='arrow-2'>
                 <ArrowDownIcon />
             </ScrollItem>
-            <ScrollItem area='m-right'>
+            <ScrollItem type='arrow-3'>
                 <ArrowDownIcon />
             </ScrollItem>
         </ScrollWrapper>

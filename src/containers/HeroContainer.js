@@ -13,7 +13,7 @@ const Hero = styled.div`
     }
 `
 
-const HeadlineWrapper = styled.div`
+export const HeadlineWrapper = styled.div`
     display: flex;
     flex-flow: column;
     justify-content: space-around;
@@ -21,21 +21,18 @@ const HeadlineWrapper = styled.div`
     height: 100%;
     padding: 2rem;
     color: var(--ranColor);
+    text-align: right;
     transition: 0.5s;
-`
-
-const Headline = styled.h2`
-    
 `
 
 export default function HeroContainer() {
     return (
         <Hero>
             <HeadlineWrapper>
-                <Headline>RUA</Headline>
-                <Headline>IR&Iacute;</Headline>
-                <Headline>CON</Headline>
-                <Headline>WAY</Headline>
+                <h2>RUA</h2>
+                <h2>IR&Iacute;</h2>
+                <h2>CON</h2>
+                <h2>WAY</h2>
             </HeadlineWrapper>
         </Hero>
     )

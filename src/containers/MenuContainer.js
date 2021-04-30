@@ -22,6 +22,10 @@ const MenuBtnOpen = styled.button`
         right: 0;
     }
 
+    @media all and (max-width: 550px) {
+        margin: 1.5rem;
+    }
+
     svg path {
         fill: var(--ranColor);
         transition: 0.5s;
