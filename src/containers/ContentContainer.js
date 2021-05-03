@@ -2,6 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import PageCount from '../components/PageCount'
 import LandingPage from '../pages/LandingPage'
+import AboutPage from '../pages/AboutPage'
+import ContactPage from '../pages/ContactPage'
+import Footer from '../components/Footer'
 
 const ContentSection = styled.section`
     position: relative;
@@ -21,17 +24,18 @@ export default function ContentContainer() {
             <ContentSection landing>
                 <LandingPage />
             </ContentSection>
-            <ContentSection>
+            <ContentSection id="work">
                 <PageCount>02</PageCount>
                 <h3>Work</h3>
             </ContentSection>
-            <ContentSection>
-                <PageCount>03</PageCount>
-                <h3>About</h3>
+            <ContentSection id="about">
+                <AboutPage />
+            </ContentSection>
+            <ContentSection id="contact">
+                <ContactPage />
             </ContentSection>
             <ContentSection>
-                <PageCount>04</PageCount>
-                <h3>Contact</h3>
+                <Footer />
             </ContentSection>
         </>
     )
