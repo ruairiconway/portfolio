@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyles = createGlobalStyle`
     html {
+        scroll-behavior: smooth;
         --ranColor: ${({colorHex}) => colorHex};
     }
 
@@ -42,4 +43,9 @@ export const GlobalStyles = createGlobalStyle`
         font-size: 1rem;
         letter-spacing: 0.1px;
     }
+
+    svg path {
+        transition: 0.5s;
+    }
+
 `
