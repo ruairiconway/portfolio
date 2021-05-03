@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react'
-import { FrameContext } from './contexts/FrameContext'
-import { GlobalStyles } from './GlobalStyles'
+import React, { useState } from 'react'
+import { GlobalStyles } from './styles/GlobalStyles'
 import { generateColor } from './tools'
 import MenuContainer from './containers/MenuContainer'
 import HeroContainer from './containers/HeroContainer'
@@ -9,7 +8,6 @@ import Frame from './components/Frame'
 
 function App() {
 
-    const { watchScroll } = useContext(FrameContext)
     const [ ranColor, setRanColor ] = useState('#0000FF')
 
     function handleColorChange(e) {
@@ -22,11 +20,11 @@ function App() {
     return (
         <>
             <GlobalStyles colorHex={ranColor} />
-            <div onWheel={() => watchScroll()} onClick={(e) => handleColorChange(e)}>
-                <Frame />
+            <div onClick={(e) => handleColorChange(e)}>
                 <MenuContainer />
                 <HeroContainer />
                 <ContentContainer />
+                <Frame />
             </div>
         </>
     );

@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { FrameContext } from '../contexts/FrameContext'
 import { CloseIcon } from '../artwork/icons'
 import SocialBar from './SocialBar'
 import MenuLinks from './MenuLinks'
@@ -15,7 +14,7 @@ const MenuWrapper = styled.div`
     min-width: 250px;
     background: white;
     border: var(--ranColor) solid;
-    border-width: ${({ frameScrolled }) => frameScrolled ? '10px 0 10px 10px' : '0 10px 10px 10px' };
+    border-width: 0 10px 10px 10px;
     transform: translateY(${({ menuActive }) => menuActive ? '0' : '-100%' });
     visibility: ${({ menuActive}) => menuActive ? 'visibile' : 'hidden' };
     transition: 0.5s;
@@ -41,11 +40,6 @@ const MenuBtnClose = styled.button`
     cursor: pointer;
     transition: 0.5s;
 
-    svg path {
-        fill: var(--ranColor);
-        transition: 0.5s;
-    }
-
     &:hover,
     &:focus {
         background: var(--ranColor);
@@ -62,13 +56,9 @@ const MenuBtnClose = styled.button`
 `
 
 export default function Menu({ menuActive, setMenuActive }) {
-
-    const { frameScrolled } = useContext(FrameContext)
-
     return(
         <MenuWrapper 
             menuActive={menuActive}
-            frameScrolled={frameScrolled}
         >
             <MenuBtnClose onClick={() => setMenuActive(!menuActive)}>
                 <CloseIcon />

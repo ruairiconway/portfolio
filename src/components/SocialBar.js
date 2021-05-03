@@ -40,11 +40,6 @@ const SocialBtn = styled.button`
     cursor: pointer;
     transition: 0.5s;
 
-    svg path {
-        fill: var(--ranColor);
-        transition: 0.5s;
-    }
-
     div {
         ${({ labelled, type }) => {
             if (labelled && type === 'email') {

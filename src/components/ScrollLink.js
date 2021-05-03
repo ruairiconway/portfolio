@@ -18,11 +18,6 @@ const ScrollWrapper = styled.div`
     border: none;
     transition: 0.5s;
 
-    svg path {
-        fill: var(--ranColor);
-        transition: 0.5s;
-    }
-
     @media all and (max-width: 550px) {
         grid-template: auto / repeat(3, 1fr);
         grid-template-areas:
@@ -45,7 +40,7 @@ export default function ScrollLink() {
     return (
         <ScrollWrapper>
             <ScrollItem type='scroll'>
-                <TextLink to='#'>Scroll</TextLink>
+                <TextLink to='#work'>Scroll</TextLink>
             </ScrollItem>
             <ScrollItem type='arrow-1'>
                 <ArrowDownIcon />

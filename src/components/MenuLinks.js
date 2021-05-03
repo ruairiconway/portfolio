@@ -22,9 +22,9 @@ const Link = styled.div`
 export default function MenuLinks() {
     return (
         <LinksWrapper>
-            <Link><TextLink to='#'>Work</TextLink></Link>
-            <Link><TextLink to='#'>About</TextLink></Link>
-            <Link><TextLink to='#'>Contact</TextLink></Link>
+            <Link><TextLink to='#work'>Work</TextLink></Link>
+            <Link><TextLink to='#about'>About</TextLink></Link>
+            <Link><TextLink to='#contact'>Contact</TextLink></Link>
         </LinksWrapper>
     )
 }

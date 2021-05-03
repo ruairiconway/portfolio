@@ -26,11 +26,6 @@ const MenuBtnOpen = styled.button`
         margin: 1.5rem;
     }
 
-    svg path {
-        fill: var(--ranColor);
-        transition: 0.5s;
-    }
-
     &:hover,
     &:focus {
         background: var(--ranColor);

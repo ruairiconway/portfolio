@@ -8,6 +8,7 @@ const Link = styled.a`
     color: var(--ranColor);
     padding: 0 4px;
     transition: 0.5s;
+    cursor: pointer;
 
     &:after {
         position: absolute;
