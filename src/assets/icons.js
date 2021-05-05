@@ -88,6 +88,15 @@ export function LinkIcon() {
     )
 }
 
+export function ExternalLinkIcon() {
+    return (
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 1L15 2L15 7L14 8L11.7071 5.70711L7.70711 9.70711L6.29289 8.29289L10.2929 4.29289L8 2L9 1H14Z" fill="var(--ranColor)"/>
+            <path d="M1 2V15H14V10H12V13H3V4H6V2H1Z" fill="var(--ranColor)"/>
+        </svg>
+    )
+}
+
 export function LinkedInIcon() {
     return(
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
