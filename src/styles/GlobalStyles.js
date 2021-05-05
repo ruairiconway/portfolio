@@ -17,7 +17,7 @@ export const GlobalStyles = createGlobalStyle`
         margin: 0;
     }
 
-    h1, h2, h3, p {
+    h1, h2, h3, h4, h5, p {
         margin: 0;
     }
 
@@ -26,6 +26,30 @@ export const GlobalStyles = createGlobalStyle`
         font-weight: 700;
         font-size: 10rem;
         letter-spacing: 1.5rem;
+        line-height: 1;
+    }
+
+    h3 {
+        font-family: 'Spectral', serif;
+        font-weight: 700;
+        font-size: 3rem;
+        letter-spacing: 2px;
+        line-height: 1;
+    }
+
+    h4 {
+        font-family: 'Spectral', serif;
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: 1.25px;
+        line-height: 1;
+    }
+
+    h5 {
+        font-family: 'Work Sans', sans-serif;
+        font-weight: 600;
+        font-size: 1rem;
+        letter-spacing: 2px;
         line-height: 1;
     }
 
@@ -45,6 +69,25 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     svg path {
+        transition: 0.5s;
+    }
+
+    ul {
+        list-style-type: square;
+        margin: 0 0 0 1rem;
+        padding: 0 0 0 1rem;
+    }
+
+    li {
+        font-family: 'Work Sans', sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+        letter-spacing: 0.1px;
+        line-height: 1.6;
+    }
+
+    li::marker {
+        color: var(--ranColor);
         transition: 0.5s;
     }
 
