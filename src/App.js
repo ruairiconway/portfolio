@@ -5,6 +5,7 @@ import MenuContainer from './containers/MenuContainer'
 import HeroContainer from './containers/HeroContainer'
 import ContentContainer from './containers/ContentContainer'
 import Frame from './components/Frame'
+import PortfolioContainer from './containers/PortfolioContainer'
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
                 <MenuContainer />
                 <HeroContainer />
                 <ContentContainer />
+                <PortfolioContainer />
                 <Frame />
             </div>
         </>
