@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { MenuIcon } from '../artwork/icons'
+import { MenuIcon } from '../assets/icons'
 import Menu from '../components/Menu'
 
 const MenuBtnOpen = styled.button`

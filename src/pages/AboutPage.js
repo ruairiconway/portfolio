@@ -3,7 +3,7 @@ import PageCount from '../components/PageCount'
 import TextLink from '../components/TextLink'
 import { BoldPara } from '../styles/BoldPara'
 import useWindowDimensions from '../hooks/useWindowDimensions'
-import { AboutIcon } from '../artwork/icons'
+import { AboutIcon } from '../assets/icons'
 
 let skills = ['HTML5', 'CSS/SCSS', 'JavaScript (ES6+)', 'React', 'JQuery', 'Git', 'GitHub', 'Figma', 'Adobe Illo.' ]
 

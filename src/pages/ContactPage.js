@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { SendIcon } from '../artwork/icons'
+import { SendIcon } from '../assets/icons'
 import PageCount from '../components/PageCount'
 
 export default function ContactPage() {

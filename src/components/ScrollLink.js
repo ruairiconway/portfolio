@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ArrowDownIcon } from '../artwork/icons'
+import { ArrowDownIcon } from '../assets/icons'
 import TextLink from './TextLink'
 
 const ScrollWrapper = styled.div`

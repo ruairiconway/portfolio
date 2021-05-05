@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { CloseIcon } from '../artwork/icons'
+import { CloseIcon } from '../assets/icons'
 import SocialBar from './SocialBar'
 import MenuLinks from './MenuLinks'
 

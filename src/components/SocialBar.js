@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { EmailIcon, LinkedInIcon, GitHubIcon } from '../artwork/icons'
+import { EmailIcon, LinkedInIcon, GitHubIcon } from '../assets/icons'
 
 const SocialWrapper = styled.div`
     ${({ stacked }) => stacked ? 
