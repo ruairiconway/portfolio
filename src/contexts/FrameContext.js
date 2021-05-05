@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-const FrameContext = React.createContext()
+import React, { useState, createContext } from 'react'
+const FrameContext = createContext()
 
 function FrameContextProvider({ children, ...prevProps }) {
 
