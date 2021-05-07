@@ -7,8 +7,8 @@ const MenuBtnOpen = styled.button`
     position: fixed;
     top: 0;
     right: 50%;
-    margin: 1.75rem;
-    padding: 0.25rem;
+    margin: 2rem;
+    padding: 0.5rem;
     display: flex;
     justify-content: center;
     align-items: center;

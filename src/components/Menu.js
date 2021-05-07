@@ -31,7 +31,7 @@ const MenuWrapper = styled.div`
 `
 
 const MenuBtnClose = styled.button`
-    padding: 0.25rem;
+    padding: 0.5rem;
     background: none;
     border: none;
     display: flex;
