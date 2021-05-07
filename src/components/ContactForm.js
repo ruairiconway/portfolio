@@ -16,20 +16,31 @@ const Form = styled.form`
         max-width: 100%;
         margin: 1rem 0;
         padding: 0.75rem;
-        transition: 0.5s;
+        transition: 0.2s;
 
         &::placeholder {
-            color: #000000;
+            transition: 0.2s;
+            color: #000;
+        }
+
+        &:hover, &:focus {
+            box-shadow: 5px 5px 0px 0px var(--ranColor);
         }
 
         &:focus {
-            box-shadow: 5px 5px 0px 0px var(--ranColor);
+            &::placeholder {
+                color: darkgrey;
+            }
+        }
+
+        &:active {
+            box-shadow: 3px 3px 0px 0px var(--ranColor);
         }
 
     }
 
     textarea {
-        min-height: 150px;
+        min-height: 175px;
     }
 `
 
@@ -37,6 +48,7 @@ const SubmitWrapper = styled.div`
     align-self: flex-end;
     display: grid;
     width: fit-content;
+    margin: 1rem 0 0 0;
     grid: 1fr 1fr / auto auto 1fr;
     grid-template-areas:
         "icon1 . btn"
@@ -69,7 +81,7 @@ const SubmitBtn = styled.button`
     background: none;
     border: none;
     padding: 0 4px;
-    transition: 0.5s;
+    transition: 0.2s;
     cursor: pointer;
 
     &:after {
@@ -123,7 +135,7 @@ export default function ContactForm() {
                 id="name"
                 type="text"
                 name="name"
-                placeholder="Your name"
+                placeholder="Name"
                 value={formName}
                 aria-label="enter name"
                 onChange={handleNameChange}
@@ -137,7 +149,7 @@ export default function ContactForm() {
                 id="email"
                 type="email"
                 name="email"
-                placeholder="Your email"
+                placeholder="Email"
                 value={formEmail}
                 aria-label="enter email"
                 onChange={handleEmailChange}
@@ -151,7 +163,7 @@ export default function ContactForm() {
                 id="message"
                 name="message"
                 value={formMessage}
-                placeholder="Your message..."
+                placeholder="Message..."
                 aria-label="enter message"
                 onChange={handleMessageChange}
             />
