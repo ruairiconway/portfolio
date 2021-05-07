@@ -40,7 +40,7 @@ export const GlobalStyles = createGlobalStyle`
     h4 {
         font-family: 'Spectral', serif;
         font-weight: 700;
-        font-size: 1rem;
+        font-size: 1.25rem;
         letter-spacing: 1.25px;
         line-height: 1;
     }
@@ -49,7 +49,7 @@ export const GlobalStyles = createGlobalStyle`
         font-family: 'Work Sans', sans-serif;
         font-weight: 600;
         font-size: 1rem;
-        letter-spacing: 2px;
+        letter-spacing: 1.25px;
         line-height: 1;
     }
 
