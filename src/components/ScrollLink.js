@@ -30,7 +30,7 @@ const ScrollItem = styled.div`
     transition: 0.25s;
     ${({ type }) => type === 'scroll' ? null : `&:hover { transform: translateY(3px); }`}
 
-    @media all and (max-width: 500px) {
+    @media all and (max-width: 550px) {
         ${({ type }) => type.includes('arrow') && 'display: none;'}
     }
 `

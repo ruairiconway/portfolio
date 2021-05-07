@@ -5,17 +5,25 @@ import { CloseIcon, ExternalLinkIcon, ArrowLeftIcon, ArrowRightIcon } from '../a
 const HeaderWrapper = styled.div`
     display: grid;
     grid: 35px / 40px 40px 1fr 125px;
+    grid-template-areas:
+        "close external name nav";
     border: solid var(--ranColor);
     border-width: 0 0 5px 0;
     transition: 0.5s;
 
     h4 {
+        font-size: 1rem;
         align-self: center;
         margin: 0 1rem;
+    }
+
+    @media all and (max-width: 550px) {
+        grid-template-area: "close external . nav";
     }
 `
 
 const CloseBtn = styled.button`
+    grid-area: close;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,6 +48,7 @@ const CloseBtn = styled.button`
 `
 
 const ExternalA = styled.a`
+    grid-area: external;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -66,9 +75,15 @@ const Title = styled.h4`
     color: var(--ranColor);
     text-transform: capitalize;
     transition: 0.5s;
+    grid-area: name;
+
+    @media all and (max-width: 550px) {
+        display: none;
+    }
 `
 
 const HeaderNav = styled.div`
+    grid-area: nav;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -85,7 +100,7 @@ const HeaderNav = styled.div`
         cursor: pointer;
         transition: 0.5s;
 
-        &:hover {
+        &:hover, &:focus {
             background: var(--ranColor);
             svg path {
                 fill: #FFF;
@@ -95,6 +110,21 @@ const HeaderNav = styled.div`
         &:active {
             svg path {
                 fill: #000;
+            }
+        }
+
+        @media all and (max-width: 550px) {
+            &:hover, &:focus {
+                background: #FFF;
+                svg path {
+                    fill: var(--ranColor);
+                }
+            }
+            &:active {
+                background: var(--ranColor);
+                svg path {
+                    fill: #000;
+                }
             }
         }
 
@@ -129,13 +159,13 @@ export default function PortfolioHeader({ id, url, dataLength, setPortfolioActiv
         }
     }
 
-    const maxLength = 19
-    let name = ''
-    if (children.length > maxLength) {
-        name = `${children.substring(0, maxLength)}...`
-    } else {
-        name = children
-    }
+    // const maxLength = 19
+    // let name = ''
+    // if (children.length > maxLength) {
+    //     name = `${children.substring(0, maxLength)}...`
+    // } else {
+    //     name = children
+    // }
 
     return (
         <HeaderWrapper>
@@ -145,7 +175,7 @@ export default function PortfolioHeader({ id, url, dataLength, setPortfolioActiv
             <ExternalA href={url} target="_blank" rel="noreferrer">
                 <ExternalLinkIcon />
             </ExternalA>
-            <Title>{name}</Title>
+            <Title>{children}</Title>
             <HeaderNav>
                 <button onClick={() => handleIndex('left')}>
                     <ArrowLeftIcon />

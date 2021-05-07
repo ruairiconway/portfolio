@@ -7,12 +7,12 @@ const MenuBtnOpen = styled.button`
     position: fixed;
     top: 0;
     right: 50%;
-    margin: 2rem;
+    margin: 1.5rem;
     padding: 0.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: none;
+    background: #FFF;
     border: none;
     cursor: pointer;
     transition: 0.5s;
@@ -23,7 +23,7 @@ const MenuBtnOpen = styled.button`
     }
 
     @media all and (max-width: 550px) {
-        margin: 1.5rem;
+        margin: 1rem;
     }
 
     &:hover,

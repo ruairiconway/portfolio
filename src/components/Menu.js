@@ -25,6 +25,10 @@ const MenuWrapper = styled.div`
         border-width: 0px 0px 5px 5px;
     }
 
+    @media all and (max-width: 550px) {
+        padding: 1.5rem;
+    }
+
     a {
         font-size: 2rem;
     }

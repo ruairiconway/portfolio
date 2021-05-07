@@ -26,9 +26,9 @@ const Title = styled.h5`
 
 export default function PortfolioInfo({ highlights, todos, skills, ...props }) {
 
-    const highlightsList = highlights.map((item, i) => <li key={i}>{item}</li>)
-    const todosList = todos.map((item, i) => <li key={i}>{item}</li>)
-    const skillsList = skills.map((item, i) => <li key={i}>{item}</li>)
+    const highlightsList = highlights.map((item, i) => <li key={i}>- {item}</li>)
+    const todosList = todos.map((item, i) => <li key={i}>- {item}</li>)
+    const skillsList = skills.map((item, i) => <li key={i}>- {item}</li>)
 
     return (
         <>

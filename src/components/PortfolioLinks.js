@@ -6,6 +6,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-evenly;
+    margin: 1rem 2rem 2rem;
 `
 
 const Link = styled.button`
@@ -63,7 +64,7 @@ const Link = styled.button`
 const Icon = styled.div`
     display: flex;
     align-items: center;
-    padding: 0.25rem;
+    padding: 0.5rem;
     transition: 0.5s;
 `
 

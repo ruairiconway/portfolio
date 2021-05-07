@@ -10,17 +10,32 @@ const PortfolioWrapper = styled.div`
     position: fixed;
     right: 3rem;
     top: 3rem;
-    height: calc(100% - 6rem);
     width: calc(50% - 6rem);
-    border: 10px solid var(--ranColor);
+    height: calc(100% - 6rem);
+    border: 5px solid var(--ranColor);
     background: #FFF;
     transition: 0.5s;
     overflow: hidden;
+    z-index: 1;
+
+    @media all and (max-width: 1025px) {
+        right: 4rem;
+        top: 3rem;
+        width: calc(100% - 8rem);
+        height: calc(100% - 6rem);
+    }
+
+    @media all and (max-width: 550px) {
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+    }
 `
 
 const PortfolioContent = styled.div`
     overflow: auto !important;
-    height: calc(100% - 3rem + 1px);
+    height: calc(100% - 40px);
     width: 100%;
 `
 
@@ -31,18 +46,23 @@ const PortfolioImage = styled.img`
 `
 
 const PortfolioDetails = styled.div`
-    padding: 1rem;
+    padding: 0 2rem;
 
-    > * {
+    h4 {
+        font-family: 'work-sans', sans-serif;
         margin: 0 0 1.5rem 0;
     }
 
-    > div:first-child {
-        margin: 0 0 0.75rem;
+    p {
+        margin: 2rem 0;
     }
 
-    > div:last-child {
-        margin: 0;
+    ul {
+        margin: 0 0 2rem 0;
+    }
+
+    @media all and (max-width: 550px) {
+        padding: 0 1.5rem;
     }
 `
 
@@ -72,14 +92,13 @@ export default function PortfolioContainer() {
             </PortfolioHeader>
             <PortfolioContent>
                 <PortfolioImage src={image} alt={image_alt} />
+                <PortfolioLinks
+                    url={url}
+                    github={github}
+                />
                 <PortfolioDetails>
-                    <PortfolioLinks
-                        url={url}
-                        github={github}
-                    />
-                    <div>
-                        <p>{desc}</p>
-                    </div>
+                    <h4>{name}</h4>
+                    <p>{desc}</p>
                     <PortfolioInfo
                         highlights={highlights}
                         todos={todos}
