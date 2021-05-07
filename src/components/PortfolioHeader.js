@@ -4,14 +4,14 @@ import { CloseIcon, ExternalLinkIcon, ArrowLeftIcon, ArrowRightIcon } from '../a
 
 const HeaderWrapper = styled.div`
     display: grid;
-    grid: 37px / 10% 10% 1fr 110px;
+    grid: 35px / 40px 40px 1fr 125px;
     border: solid var(--ranColor);
-    border-width: 0 0 10px 0;
+    border-width: 0 0 5px 0;
     transition: 0.5s;
 
     h4 {
         align-self: center;
-        margin: 0 0 0 1rem;
+        margin: 0 1rem;
     }
 `
 
@@ -20,7 +20,7 @@ const CloseBtn = styled.button`
     justify-content: center;
     align-items: center;
     border: solid var(--ranColor);
-    border-width: 0 10px 0 0;
+    border-width: 0 5px 0 0;
     background: #FF3B30;
     transition: 0.5s;
     cursor: pointer;
@@ -44,7 +44,7 @@ const ExternalA = styled.a`
     justify-content: center;
     align-items: center;
     border: solid var(--ranColor);
-    border-width: 0 10px 0 0;
+    border-width: 0 5px 0 0;
     transition: 0.5s;
     background: #28CD41;
 
@@ -64,7 +64,7 @@ const ExternalA = styled.a`
 
 const Title = styled.h4`
     color: var(--ranColor);
-    text-transform: uppercase;
+    text-transform: capitalize;
     transition: 0.5s;
 `
 
@@ -102,6 +102,11 @@ const HeaderNav = styled.div`
 
     p {
         text-align: center;
+        font-family: 'Spectral', serif;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 1;
+        color: lightgrey;
     }
 
 `
@@ -124,6 +129,14 @@ export default function PortfolioHeader({ id, url, dataLength, setPortfolioActiv
         }
     }
 
+    const maxLength = 19
+    let name = ''
+    if (children.length > maxLength) {
+        name = `${children.substring(0, maxLength)}...`
+    } else {
+        name = children
+    }
+
     return (
         <HeaderWrapper>
             <CloseBtn onClick={() => setPortfolioActive(false)}>
@@ -132,7 +145,7 @@ export default function PortfolioHeader({ id, url, dataLength, setPortfolioActiv
             <ExternalA href={url} target="_blank" rel="noreferrer">
                 <ExternalLinkIcon />
             </ExternalA>
-            <Title>{children}</Title>
+            <Title>{name}</Title>
             <HeaderNav>
                 <button onClick={() => handleIndex('left')}>
                     <ArrowLeftIcon />

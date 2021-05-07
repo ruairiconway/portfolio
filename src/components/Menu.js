@@ -14,7 +14,7 @@ const MenuWrapper = styled.div`
     min-width: 250px;
     background: white;
     border: var(--ranColor) solid;
-    border-width: 0 10px 10px 10px;
+    border-width: 0 5px 5px 5px;
     transform: translateY(${({ menuActive }) => menuActive ? '0' : '-100%' });
     visibility: ${({ menuActive}) => menuActive ? 'visibile' : 'hidden' };
     transition: 0.5s;
@@ -22,7 +22,7 @@ const MenuWrapper = styled.div`
 
     @media all and (max-width: 1025px) {
         right: 0;
-        border-width: 0px 0px 10px 10px;
+        border-width: 0px 0px 5px 5px;
     }
 
     a {
