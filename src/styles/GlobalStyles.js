@@ -59,6 +59,7 @@ export const GlobalStyles = createGlobalStyle`
         font-size: 1rem;
         letter-spacing: 0.1px;
         line-height: 1.6;
+        margin: 1.5rem 0;
     }
 
     a, button p {
@@ -73,9 +74,9 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     ul {
-        list-style-type: square;
-        margin: 0 0 0 1rem;
-        padding: 0 0 0 1rem;
+        list-style-type: none;
+        margin: 1rem 0;
+        padding: 0;
     }
 
     li {
@@ -84,11 +85,6 @@ export const GlobalStyles = createGlobalStyle`
         font-size: 1rem;
         letter-spacing: 0.1px;
         line-height: 1.6;
-    }
-
-    li::marker {
-        color: var(--ranColor);
-        transition: 0.5s;
     }
 
 `
