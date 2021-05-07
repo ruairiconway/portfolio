@@ -14,7 +14,7 @@ export default function ContactPage() {
         <>
             <PageCount>04</PageCount>
             <Title>Contact</Title>
-            <p>I’m always looking for new opportunities.<br/>Whether it’s freelance or full-time. Give me a shout!</p>
+            <p>I’m always looking for new opportunities.<br/>Whether it’s freelance or full-time, give me a shout!</p>
             <ContactForm />
         </>
     )
