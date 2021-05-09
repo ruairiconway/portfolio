@@ -9,7 +9,7 @@ const Wrapper = styled.div`
     margin: 1rem 2rem 2rem;
 `
 
-const Link = styled.button`
+const Link = styled.a`
     width: fit-content;
     height: fit-content;
     margin: 0;
@@ -24,10 +24,10 @@ const Link = styled.button`
     transition: 0.5s;
 
     div {
-        ${({ type }) => {
-            if (type === 'visit') {
+        ${({ dest }) => {
+            if (dest === 'visit') {
                 return `margin: 0 0 0 0.25rem;`
-            } else if (type === 'github') {
+            } else if (dest === 'github') {
                 return `margin: 0 0.25rem 0 0;`
             } 
         }}
@@ -82,13 +82,21 @@ const Label = styled.p`
 export default function PortfolioLinks({ url, github, ...props }) {
     return (
         <Wrapper>
-            <Link type='visit'>
+            <Link
+                href={url}
+                target="_blank"
+                dest='visit'
+            >
                 <Label>Visit</Label>
                 <Icon>
                     <LinkIcon />
                 </Icon>
             </Link>
-            <Link type='github'>
+            <Link
+                href={github}
+                target="_blank"
+                dest='github'
+            >
                 <Icon>
                     <GitHubIcon />
                 </Icon>

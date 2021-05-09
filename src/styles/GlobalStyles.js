@@ -62,7 +62,18 @@ export const GlobalStyles = createGlobalStyle`
         margin: 1.5rem 0;
     }
 
+    a {
+        text-decoration: none;
+    }
+
     a, button p {
+        font-family: 'Spectral', serif;
+        font-weight: 400;
+        font-size: 1rem;
+        letter-spacing: 0.1px;
+    }
+
+    a p {
         font-family: 'Spectral', serif;
         font-weight: 400;
         font-size: 1rem;

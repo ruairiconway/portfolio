@@ -24,15 +24,15 @@ const SocialWrapper = styled.div`
     }
 `
 
-const SocialBtn = styled.button`
-    grid-area: ${({ type }) => type};
+const SocialBtn = styled.a`
+    grid-area: ${({ dest }) => dest};
     width: fit-content;
     height: fit-content;
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: ${({ type }) => type === 'email' ? 'flex-end' : 'flex-start' };
-    ${({ type }) => type === 'email' && 'justify-self: end;'}
+    justify-content: ${({ dest }) => dest === 'email' ? 'flex-end' : 'flex-start' };
+    ${({ dest }) => dest === 'email' && 'justify-self: end;'}
     align-items: center;
     background: none;
     border: none;
@@ -41,10 +41,10 @@ const SocialBtn = styled.button`
     transition: 0.5s;
 
     div {
-        ${({ labelled, type }) => {
-            if (labelled && type === 'email') {
+        ${({ labelled, dest }) => {
+            if (labelled && dest === 'email') {
                 return `margin: 0 0 0 0.25rem;`
-            } else if (labelled && type !== 'email') {
+            } else if (labelled && dest !== 'email') {
                 return `margin: 0 0.25rem 0 0;`
             } else if (!labelled) {
                 return ``
@@ -103,19 +103,31 @@ const SocialLabel = styled.p`
 export default function SocialBar({ labelled = false, stacked = false }) {
     return(
         <SocialWrapper stacked={stacked}>
-            <SocialBtn type='email' labelled={labelled}>
+            <SocialBtn
+                href="mailto:hi@ruairiconway.com"
+                target="_blank"
+                dest="email"
+                labelled={labelled}>
                 {labelled && <SocialLabel>Email</SocialLabel>}
                 <Icon>
                     <EmailIcon />
                 </Icon>
             </SocialBtn>
-            <SocialBtn type='linkedin' labelled={labelled}>
+            <SocialBtn
+                href="https://www.linkedin.com/in/ruairiconway"
+                target="_blank"
+                dest="linkedin"
+                labelled={labelled}>
                 <Icon>
                     <LinkedInIcon />
                 </Icon>
                 {labelled && <SocialLabel>LinkedIn</SocialLabel>}
             </SocialBtn>
-            <SocialBtn type='github' labelled={labelled}>
+            <SocialBtn
+                href="https://github.com/ruairiconway"
+                target="_blank"
+                dest="github"
+                labelled={labelled}>
                 <Icon>
                     <GitHubIcon />
                 </Icon>
