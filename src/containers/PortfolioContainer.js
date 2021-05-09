@@ -18,14 +18,14 @@ const PortfolioWrapper = styled.div`
     z-index: 1;
 
     @media all and (max-width: 1025px) {
-        right: 4rem;
+        right: ${({ portfolioActive }) => portfolioActive ? '4rem' : 'calc(-50% + 8rem)'};
         top: 3rem;
         width: calc(100% - 8rem);
         height: calc(100% - 6rem);
     }
 
     @media all and (max-width: 550px) {
-        right: 0;
+        right: ${({ portfolioActive }) => portfolioActive ? '0' : '-100%'};
         top: 0;
         height: 100%;
         width: 100%;
