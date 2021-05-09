@@ -118,7 +118,7 @@ export default function LandingPage() {
                 <SocialBar labelled stacked />
             </LandingItem>
             <LandingItem type='name'>
-                <p>My name is <TextLink to='#'>Ruair&iacute; Conway</TextLink>.</p>
+                <p>My name is <TextLink>Ruair&iacute; Conway</TextLink>.</p>
             </LandingItem>
             <LandingItem type='lead'>
                 <p>I'm a frontend developer<br/>based in Brooklyn, NY.</p>

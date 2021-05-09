@@ -39,9 +39,5 @@ const Link = styled.a`
 `
 
 export default function TextLink({ to, children }) {
-    return (
-        <Link href={to}>
-            {children}
-        </Link>
-    )
+    return <Link href={to}>{children}</Link>
 }
