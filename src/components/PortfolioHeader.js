@@ -16,10 +16,6 @@ const HeaderWrapper = styled.div`
         align-self: center;
         margin: 0 1rem;
     }
-
-    @media all and (max-width: 550px) {
-        grid-template-area: "close external . nav";
-    }
 `
 
 const CloseBtn = styled.button`
