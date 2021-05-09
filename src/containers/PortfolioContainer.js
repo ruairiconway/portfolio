@@ -6,9 +6,8 @@ import PortfolioLinks from '../components/PortfolioLinks'
 import PortfolioInfo from '../components/PortfolioInfo'
 
 const PortfolioWrapper = styled.div`
-    ${({ portfolioActive }) => !portfolioActive && 'display: none;'}
     position: fixed;
-    right: 3rem;
+    right: ${({ portfolioActive }) => portfolioActive ? '3rem' : 'calc(-50% + 6rem)'};
     top: 3rem;
     width: calc(50% - 6rem);
     height: calc(100% - 6rem);
