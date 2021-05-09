@@ -28,6 +28,7 @@ const CloseBtn = styled.button`
     background: #FF3B30;
     transition: 0.5s;
     cursor: pointer;
+    margin: 0;
 
     &:hover,
     &:focus {
