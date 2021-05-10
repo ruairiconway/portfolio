@@ -18,7 +18,7 @@ const PortfolioWrapper = styled.div`
     z-index: 1;
 
     @media all and (max-width: 1025px) {
-        right: ${({ portfolioActive }) => portfolioActive ? '4rem' : 'calc(-50% + 8rem)'};
+        right: ${({ portfolioActive }) => portfolioActive ? '4rem' : 'calc(-100% + 8rem)'};
         top: 3rem;
         width: calc(100% - 8rem);
         height: calc(100% - 6rem);
@@ -75,7 +75,7 @@ export default function PortfolioContainer() {
         setPortfolioIndex,
     } = useContext(PortfolioContext)
     const dataLength = portfolioData.length
-    const { id, name, image, image_alt, url, github, desc, highlights, todos, skills } = portfolioData[portfolioIndex - 1]
+    const { id, name, image_main, image_alt, url, github, desc, highlights, todos, skills } = portfolioData[portfolioIndex - 1]
 
     return (
         <PortfolioWrapper portfolioActive={portfolioActive} >
@@ -90,7 +90,7 @@ export default function PortfolioContainer() {
                 {name}
             </PortfolioHeader>
             <PortfolioContent>
-                <PortfolioImage src={image} alt={image_alt} />
+                <PortfolioImage src={image_main} alt={image_alt} />
                 <PortfolioLinks
                     url={url}
                     github={github}
