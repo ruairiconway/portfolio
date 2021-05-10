@@ -156,14 +156,6 @@ export default function PortfolioHeader({ id, url, dataLength, setPortfolioActiv
         }
     }
 
-    // const maxLength = 19
-    // let name = ''
-    // if (children.length > maxLength) {
-    //     name = `${children.substring(0, maxLength)}...`
-    // } else {
-    //     name = children
-    // }
-
     return (
         <HeaderWrapper>
             <CloseBtn onClick={() => setPortfolioActive(false)}>
