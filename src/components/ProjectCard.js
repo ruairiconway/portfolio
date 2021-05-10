@@ -2,10 +2,6 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { PortfolioContext } from '../contexts/PortfolioContext'
 
-const Card = styled.div`
-    
-`
-
 const PortfolioBtn = styled.button`
     display: flex;
     justify-content: flex-end;
@@ -14,8 +10,9 @@ const PortfolioBtn = styled.button`
     height: 200px;
     padding: 0;
     border: none;
-    background-image: url(${({ value }) => value.image});
+    background-image: url(${({ value }) => value.image_thumb});
     background-position: center;
+    background-size: cover;
     transition: 0.2s;
     cursor: pointer; 
 
@@ -64,20 +61,22 @@ export default function ProjectCard({value, ...props}) {
 
     const { portfolioActive, setPortfolioActive, portfolioIndex, setPortfolioIndex } = useContext(PortfolioContext)
 
+    function watchPortfolio() {
+        setPortfolioActive(true)
+        setPortfolioIndex(value.id)
+    }
+
     return (
-        <Card>
+        <div>
             <PortfolioBtn
                 value={value}
                 portfolioActive={portfolioActive}
                 portfolioIndex={portfolioIndex}
-                onClick={() => {
-                setPortfolioActive(true)
-                setPortfolioIndex(value.id)
-                }}
+                onClick={() => {watchPortfolio()}}
             >
                 <h4>{value.name}</h4>
             </PortfolioBtn>
             <p>{value.caption}</p>
-        </Card>
+        </div>
     )
 }
