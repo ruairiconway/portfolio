@@ -1,17 +1,25 @@
 {
   "files": {
-    "main.js": "/portfolio/static/js/main.fd188933.chunk.js",
-    "main.js.map": "/portfolio/static/js/main.fd188933.chunk.js.map",
+    "main.js": "/portfolio/static/js/main.e7a2da72.chunk.js",
+    "main.js.map": "/portfolio/static/js/main.e7a2da72.chunk.js.map",
     "runtime-main.js": "/portfolio/static/js/runtime-main.76232b81.js",
     "runtime-main.js.map": "/portfolio/static/js/runtime-main.76232b81.js.map",
     "static/js/2.50f03a6e.chunk.js": "/portfolio/static/js/2.50f03a6e.chunk.js",
     "static/js/2.50f03a6e.chunk.js.map": "/portfolio/static/js/2.50f03a6e.chunk.js.map",
     "index.html": "/portfolio/index.html",
-    "static/js/2.50f03a6e.chunk.js.LICENSE.txt": "/portfolio/static/js/2.50f03a6e.chunk.js.LICENSE.txt"
+    "static/js/2.50f03a6e.chunk.js.LICENSE.txt": "/portfolio/static/js/2.50f03a6e.chunk.js.LICENSE.txt",
+    "static/media/bookClubMain.05af73a2.png": "/portfolio/static/media/bookClubMain.05af73a2.png",
+    "static/media/bookClubThumbnail.e1cede5a.png": "/portfolio/static/media/bookClubThumbnail.e1cede5a.png",
+    "static/media/notflixMain.1ea4845b.png": "/portfolio/static/media/notflixMain.1ea4845b.png",
+    "static/media/notflixThumbnail.2540fde1.png": "/portfolio/static/media/notflixThumbnail.2540fde1.png",
+    "static/media/npsMain.0c165d05.png": "/portfolio/static/media/npsMain.0c165d05.png",
+    "static/media/npsThumbnail.64293966.png": "/portfolio/static/media/npsThumbnail.64293966.png",
+    "static/media/serpentesMain.3c892ceb.png": "/portfolio/static/media/serpentesMain.3c892ceb.png",
+    "static/media/serpentesThumbnail.a1bc2c4e.png": "/portfolio/static/media/serpentesThumbnail.a1bc2c4e.png"
   },
   "entrypoints": [
     "static/js/runtime-main.76232b81.js",
     "static/js/2.50f03a6e.chunk.js",
-    "static/js/main.fd188933.chunk.js"
+    "static/js/main.e7a2da72.chunk.js"
   ]
 }
