@@ -1,25 +1,23 @@
 {
   "files": {
-    "main.js": "/portfolio/static/js/main.71689e8f.chunk.js",
-    "main.js.map": "/portfolio/static/js/main.71689e8f.chunk.js.map",
+    "main.js": "/portfolio/static/js/main.77f6c561.chunk.js",
+    "main.js.map": "/portfolio/static/js/main.77f6c561.chunk.js.map",
     "runtime-main.js": "/portfolio/static/js/runtime-main.76232b81.js",
     "runtime-main.js.map": "/portfolio/static/js/runtime-main.76232b81.js.map",
     "static/js/2.50f03a6e.chunk.js": "/portfolio/static/js/2.50f03a6e.chunk.js",
     "static/js/2.50f03a6e.chunk.js.map": "/portfolio/static/js/2.50f03a6e.chunk.js.map",
     "index.html": "/portfolio/index.html",
     "static/js/2.50f03a6e.chunk.js.LICENSE.txt": "/portfolio/static/js/2.50f03a6e.chunk.js.LICENSE.txt",
-    "static/media/bookClubMain.05af73a2.png": "/portfolio/static/media/bookClubMain.05af73a2.png",
-    "static/media/bookClubThumbnail.e1cede5a.png": "/portfolio/static/media/bookClubThumbnail.e1cede5a.png",
-    "static/media/notflixMain.57f1e571.png": "/portfolio/static/media/notflixMain.57f1e571.png",
-    "static/media/notflixThumbnail.90fa407a.png": "/portfolio/static/media/notflixThumbnail.90fa407a.png",
-    "static/media/npsMain.0c165d05.png": "/portfolio/static/media/npsMain.0c165d05.png",
-    "static/media/npsThumbnail.64293966.png": "/portfolio/static/media/npsThumbnail.64293966.png",
-    "static/media/serpentesMain.3c892ceb.png": "/portfolio/static/media/serpentesMain.3c892ceb.png",
-    "static/media/serpentesThumbnail.a1bc2c4e.png": "/portfolio/static/media/serpentesThumbnail.a1bc2c4e.png"
+    "static/media/bookClubMain.1cce6172.png": "/portfolio/static/media/bookClubMain.1cce6172.png",
+    "static/media/notflixMain.f5decc10.png": "/portfolio/static/media/notflixMain.f5decc10.png",
+    "static/media/notflixThumbnail.6fbfc4f3.png": "/portfolio/static/media/notflixThumbnail.6fbfc4f3.png",
+    "static/media/npsMain.d044f817.png": "/portfolio/static/media/npsMain.d044f817.png",
+    "static/media/npsThumbnail.0c79d279.png": "/portfolio/static/media/npsThumbnail.0c79d279.png",
+    "static/media/serpentesMain.75ad8798.png": "/portfolio/static/media/serpentesMain.75ad8798.png"
   },
   "entrypoints": [
     "static/js/runtime-main.76232b81.js",
     "static/js/2.50f03a6e.chunk.js",
-    "static/js/main.71689e8f.chunk.js"
+    "static/js/main.77f6c561.chunk.js"
   ]
 }
