@@ -14,6 +14,7 @@ My home on the internet. Built using React.
 ## Points of Interest
 - Implementation of useState, useContext, and useEffect hooks, as well as a custom hook for watching browser width.
 - Use of Styled Components.
+- When clicking on the background, the site color will randomize. Combination of global styles, from Styled Components, and CSS variables.
 - Contact form handled using Formspree.
 
 ## To dos
