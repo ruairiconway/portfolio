@@ -18,4 +18,5 @@ My home on the internet. Built using React.
 - Contact form handled using Formspree.
 
 ## To dos
+- Image loader for portfolio component.
 - Feedback has been hit or miss on visual style. Might need a facelift later on, more welcoming and less utilitarian.
