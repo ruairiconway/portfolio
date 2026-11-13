@@ -1,5 +1,5 @@
 // Shared field: per-entry SEO overrides of the global SEO settings (cms/app.ts).
-// Used by pages and blog posts: import seo from '…/fields/seo', then add `seo`
+// Used by pages: import seo from '…/fields/seo', then add `seo`
 // to their fields.
 // Mirrors app/composables/usePageSeo.ts, which applies the overrides.
 import { defineField } from '../../modules/cms/define'

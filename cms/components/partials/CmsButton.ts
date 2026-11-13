@@ -12,6 +12,7 @@
 // button into rich text (Insert → Button).
 import { defineEmbed, defineField } from '../../../modules/cms/define'
 import { anchorPattern } from '../../fields/anchorId'
+import url from './CmsUrl'
 
 // The button's fields, named after CmsButton's props.
 const fields = [
@@ -53,15 +54,7 @@ const fields = [
       {
         name: 'external',
         label: 'External URL',
-        fields: [
-          {
-            name: 'url',
-            label: 'URL',
-            widget: 'string',
-            pattern: ['^(https?://|mailto:|tel:)', 'Must start with https://, http://, mailto: or tel:.'],
-            hint: 'A full link to another site, e.g. https://example.com. mailto: and tel: links work too.',
-          },
-        ],
+        fields: [url],
       },
     ],
   }),

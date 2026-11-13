@@ -18,13 +18,6 @@ export default defineContentConfig({
       schema: cmsSchema({ collection: 'pages' }, { omit: ['path'] }), // cms/pages/[...slug].ts
     }),
 
-    // content/posts/*.md -> /blog/<slug>
-    posts: defineCollection({
-      type: 'page',
-      source: { include: 'posts/**/*.md', prefix: '/blog' },
-      schema: cmsSchema({ collection: 'posts' }, { omit: ['body'] }), // cms/pages/blog/[slug].ts
-    }),
-
     // Navigation: one file per area, grouped as a collection in the CMS.
     alertBanner: defineCollection({
       type: 'data',

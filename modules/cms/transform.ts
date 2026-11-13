@@ -10,7 +10,7 @@
  *   dimensions from the file in public/. <CmsImage> uses them for `width` and
  *   `height` attributes, so images never shift the layout as they load.
  *
- * A Markdown file's own body (e.g. a blog post's `body`) is left alone: Nuxt
+ * A Markdown file's own body is left alone: Nuxt
  * Content already parses that, and it's rendered with <ContentRenderer>.
  */
 import { readFileSync } from 'node:fs'

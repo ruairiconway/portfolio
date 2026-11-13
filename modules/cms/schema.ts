@@ -3,7 +3,7 @@
  * content.config.ts doesn't repeat them and `queryCollection()` results are
  * typed from the same fields the CMS edits:
  *
- *   schema: cmsSchema({ collection: 'posts' }, { omit: ['body'] })
+ *   schema: cmsSchema({ collection: 'pages' }, { omit: ['path'] })
  *   schema: cmsSchema({ collection: 'navigation', file: 'header' })
  *   schema: cmsSchema({ singleton: 'site' })
  *

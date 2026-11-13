@@ -1,5 +1,5 @@
 /**
- * Adds every page and post to the prerender list, so a page is built even if
+ * Adds every page to the prerender list, so a page is built even if
  * nothing links to it yet (for example, a new page whose URL path an editor
  * just set in the CMS). The crawler still finds anything that's linked.
  *
@@ -14,7 +14,6 @@ import { parse } from 'yaml'
 // Content folder -> URL prefix. Keep in sync with `source.prefix` in content.config.ts.
 const SOURCES = [
   { dir: 'content/pages', prefix: '' },
-  { dir: 'content/posts', prefix: '/blog' },
 ]
 
 function frontmatter(file: string): Record<string, unknown> {

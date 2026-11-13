@@ -28,8 +28,6 @@ The CMS config (`cms/`) and the styles (`app/assets/scss/`) mirror `app/`. Anyth
 |---|---|---|---|
 | Layout shell | `cms/app.ts` | `app/app.vue` | `app/assets/scss/app.scss` |
 | Pages | `cms/pages/[...slug].ts` | `app/pages/[...slug].vue` | – |
-| Blog post | `cms/pages/blog/[slug].ts` | `app/pages/blog/[slug].vue` | – |
-| Blog listing | – | `app/pages/blog/index.vue` | `app/assets/scss/pages/blog/index.scss` |
 | Header | `cms/components/SiteHeader.ts` | `app/components/SiteHeader.vue` | `app/assets/scss/components/SiteHeader.scss` |
 | A page block, e.g. Quote | `cms/components/blocks/Quote.ts` | `app/components/blocks/Quote.vue` | `app/assets/scss/components/blocks/Quote.scss` |
 | A partial, e.g. CmsVideo | `cms/components/partials/CmsVideo.ts` | `app/components/partials/CmsVideo.vue` | `app/assets/scss/components/partials/CmsVideo.scss` |
@@ -57,8 +55,6 @@ app/
   error.vue               # 404 / error page
   pages/
     [...slug].vue         # block-based pages from content/pages/*.md
-    blog/index.vue        # post listing
-    blog/[slug].vue       # posts from content/posts/*.md
   assets/scss/
     abstracts/            # variables, mixins, functions (no CSS output); auto-injected
     base/                 # :root tokens, reset
@@ -67,7 +63,6 @@ app/
     components/, pages/   # mirror app/components and app/pages
 content/
   pages/                  # URL comes from each file's `path` (e.g. path: /about)
-  posts/                  # hello-world.md -> /blog/hello-world
   navigation/             # "Navigation" collection in the CMS
     alert-banner.json     # site-wide announcement bar (off by default)
     header.json           # header links
@@ -131,14 +126,14 @@ Each page has a **URL path** field in the CMS, e.g. `/about`, `/services/design`
 - The CMS rejects paths that aren't lowercase letters, numbers and hyphens starting with `/`, and paths already used by another page.
 - Changing a page's path doesn't redirect the old URL. Update any links to it, such as in Navigation. The build fails if a link points to a page that no longer exists.
 
-### Page and post SEO
+### Page SEO
 
-Pages and blog posts have a collapsible **SEO** section in the CMS. It's defined once, in `cms/fields/seo.ts`, and saved under `seo:` in each entry's frontmatter. It has:
+Pages have a collapsible **SEO** section in the CMS. It's defined once, in `cms/fields/seo.ts`, and saved under `seo:` in each entry's frontmatter. It has:
 
 - **Meta title:** replaces the entry's title in search results and link previews, but not on the page itself. The site name is still added after it.
 - **The global SEO fields:** title separator, meta description, social image, X/Twitter handle and "Hide from search engines".
 
-Any field left blank uses the global value from the SEO singleton. For posts, the post's own Description is used before the global one.
+Any field left blank uses the global value from the SEO singleton.
 
 "Hide from search engines" hides just that entry. If the global setting is on, every page stays hidden whatever the entry says.
 
@@ -162,7 +157,7 @@ Fields are defined once, in `cms/`. Everything else that describes them is gener
 | `Block` | any block (a union of all of them) | |
 | `<Name>Field` | each shared field in `cms/fields/` and `cms/components/partials/` | `SeoField`, `CmsImageField`, `CmsVideoField`, `CmsButtonField` |
 | `CmsImage` | every `image` field: `{ src, width, height }` | |
-| `<Name>Entry` | one entry of a folder collection | `PagesEntry`, `PostsEntry` |
+| `<Name>Entry` | one entry of a folder collection | `PagesEntry` |
 | `<Collection><File>File` | each file in a files collection | `NavigationHeaderFile` |
 | `<Name>Singleton` | each singleton | `SiteSingleton`, `SeoSingleton` |
 
@@ -175,7 +170,7 @@ defineProps<{ block: QuoteBlock }>()
 **Content schemas.** In `content.config.ts`, each collection sets its `source`, which says where the files are and how they're routed. Its schema comes from the CMS:
 
 ```ts
-schema: cmsSchema({ collection: 'posts' }, { omit: ['body'] })
+schema: cmsSchema({ collection: 'pages' }, { omit: ['path'] })
 schema: cmsSchema({ collection: 'navigation', file: 'header' })
 schema: cmsSchema({ singleton: 'site' })
 ```
@@ -222,7 +217,7 @@ The block then appears in the CMS block picker, under each page's **Page content
 1. Add a `cms/` file at the path that mirrors its Vue page, e.g. `cms/pages/events/[slug].ts`, exporting `defineCms({ collections: [...] })`. Add its `name` to the list in `cms/config.ts` to place it in the sidebar.
 2. Add a collection in `content.config.ts` with its `source` and `schema: cmsSchema({ collection: 'events' })`.
 3. Add the page under `app/pages/`. Call `usePageSeo({ title, description, image })` for its meta tags. Anything you leave out falls back to the SEO singleton. To give editors per-entry SEO overrides, import `cms/fields/seo.ts` and add it to its CMS fields and pass `entry.seo` as `overrides`.
-4. Add its content folder to `SOURCES` in `modules/prerender-content.ts` so every entry is prerendered, even ones nothing links to. Pages and posts are already covered.
+4. Add its content folder to `SOURCES` in `modules/prerender-content.ts` so every entry is prerendered, even ones nothing links to. Pages are already covered.
 
 ### Styling (SCSS)
 
@@ -316,8 +311,8 @@ A plain `widget: 'image'` field works too (like a post's cover): `<CmsImage :ima
 - **Resizing:** [`@nuxt/image`](https://image.nuxt.com) offers each image in the widths `sizes` asks for, as WebP. On Netlify that's [Netlify Image CDN](https://docs.netlify.com/image-cdn/overview/), which resizes when an image is requested, so build time doesn't grow with the number of images. Locally, `pnpm dev` uses IPX and `pnpm generate` writes the variants into the output.
 - **`sizes`:** the rendered width from each breakpoint up. Always prefix each size with a breakpoint (`phone:100vw`, not `100vw`), or `@nuxt/image` adds useless 1 px variants. The layout is at most about 704 px wide.
 - **No layout shift:** image dimensions are read from the files at build time (`modules/cms/transform.ts`), so every image gets real `width` and `height` attributes and nothing moves as it loads.
-- **`priority`:** use it for the main image at the top of the page, like a hero image or a post's cover. It loads eagerly at high priority. Everything else lazy-loads.
-- **Alt text:** every image has a description field: `alt` in the shared field, `imageAlt` on posts. An empty description, or none, marks an image as decorative (`alt=""`).
+- **`priority`:** use it for the main image at the top of the page, like a hero image. It loads eagerly at high priority. Everything else lazy-loads.
+- **Alt text:** every image has a description field: `alt` in the shared field. An empty description, or none, marks an image as decorative (`alt=""`).
 - **SVGs** are used as-is.
 
 **Video is hosted elsewhere, never uploaded.** Video files in git stay in its history permanently, and they can't stream at the right quality for each viewer. `cms/components/partials/CmsVideo.ts` is a shared field that takes:
@@ -401,7 +396,7 @@ fields: [..., button]
 <CmsButton v-bind="block.button" />
 ```
 
-It renders nothing without text and a link. Styles are in `app/assets/scss/components/partials/CmsButton.scss`. The page picker lists the Pages collection only, so blog posts can't be picked yet. To allow them, add a third link type in `CmsButton.ts` with a relation field to `posts` (posts have no `path` field, so store the post's slug), and build its `/blog/<slug>` URL in `CmsButton.vue`.
+It renders nothing without text and a link. Styles are in `app/assets/scss/components/partials/CmsButton.scss`. The page picker lists the Pages collection.
 
 ### Fonts
 

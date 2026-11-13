@@ -80,7 +80,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ['/', '/blog'],
+      routes: ['/'],
       // Never let the crawler write over the CMS admin page in public/admin.
       ignore: ['/admin'],
     },
