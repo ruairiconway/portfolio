@@ -127,6 +127,29 @@ function fillPlaceholders(value: unknown, blocks: Obj[], embedIds: string[]): vo
   }
 }
 
+// Sveltia's own rich text components, allowed in `editor_components` beside embeds.
+const BUILT_IN_EDITOR_COMPONENTS = ['code-block', 'image', 'table', 'hr']
+
+/** Every `editor_components` item must be a built-in or an embed, so a typo fails the build. */
+function checkEditorComponents(value: unknown, embedIds: string[], where: string): void {
+  if (Array.isArray(value)) {
+    for (const item of value) checkEditorComponents(item, embedIds, where)
+  } else if (isObject(value)) {
+    const list = value.editor_components
+    if (Array.isArray(list)) {
+      for (const id of list) {
+        if (typeof id === 'string' && !embedIds.includes(id) && !BUILT_IN_EDITOR_COMPONENTS.includes(id)) {
+          const field = typeof value.name === 'string' ? ` field "${value.name}"` : ''
+          throw new Error(
+            `${where}:${field} editor_components has "${id}", which isn't an embed (${embedIds.join(', ')}) or a Sveltia component (${BUILT_IN_EDITOR_COMPONENTS.join(', ')})`,
+          )
+        }
+      }
+    }
+    for (const child of Object.values(value)) checkEditorComponents(child, embedIds, where)
+  }
+}
+
 function checkComplete(config: Obj): void {
   for (const key of ['collections', 'singletons'] as const) {
     const items = config[key]
@@ -208,6 +231,9 @@ export function buildCms(sourceDir: string): CmsBuild {
   for (const field of fields.values()) fillPlaceholders(field, blocks, embedIds)
   fillPlaceholders(blocks, blocks, embedIds)
   fillPlaceholders(config, blocks, embedIds)
+  for (const [file, field] of fields) checkEditorComponents(field, embedIds, `${SOURCE_DIR}/${file}`)
+  blocks.forEach((block, index) => checkEditorComponents(block, embedIds, `${SOURCE_DIR}/${blockFiles[index]}`))
+  checkEditorComponents(config, embedIds, SOURCE_DIR)
   checkComplete(config)
 
   return {
