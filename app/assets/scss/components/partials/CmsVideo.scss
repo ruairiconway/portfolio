@@ -1,0 +1,70 @@
+// Styles for app/components/partials/CmsVideo.vue (scoped).
+// Abstracts ($variables, @include mixins) are auto-injected.
+
+.video {
+  margin: 0;
+
+  &__frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background: #000;
+
+    iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  }
+
+  &__play {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #fff;
+    cursor: pointer;
+
+    &:hover .video__icon,
+    &:focus-visible .video__icon {
+      transform: scale(1.08);
+    }
+
+    &:focus-visible {
+      outline: 3px solid var(--color-accent);
+      outline-offset: -3px;
+    }
+  }
+
+  &__poster,
+  :deep(.video__poster) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__icon {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background: rgb(0 0 0 / 60%);
+    transition: transform 0.15s ease;
+  }
+
+  figcaption {
+    margin-top: 0.5rem;
+    color: var(--color-muted);
+    font-size: 0.875rem;
+  }
+}

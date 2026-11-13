@@ -1,0 +1,23 @@
+@use '../abstracts' as *;
+
+:root {
+  --color-bg: #ffffff;
+  --color-fg: #1a1a1a;
+  --color-muted: #666666;
+  --color-accent: #00dc82;
+  --color-banner-info-bg: #e6f0ff;
+  --color-banner-info-fg: #0b3d91;
+  --color-banner-warning-bg: #fff4d6;
+  --color-banner-warning-fg: #6b4a00;
+  color-scheme: light dark;
+
+  @include dark {
+    --color-bg: #111111;
+    --color-fg: #eeeeee;
+    --color-muted: #999999;
+    --color-banner-info-bg: #102a54;
+    --color-banner-info-fg: #d6e6ff;
+    --color-banner-warning-bg: #3d2e00;
+    --color-banner-warning-fg: #ffe9a8;
+  }
+}

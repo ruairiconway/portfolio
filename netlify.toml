@@ -1,0 +1,20 @@
+# https://docs.netlify.com/configure-builds/file-based-configuration/
+[build]
+  command = "pnpm run generate"
+  # Nuxt detects Netlify and uses its netlify-static preset, which writes the site to dist/.
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+# Don't let search engines index the CMS admin UI.
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+
+# Long-cache hashed build assets.
+[[headers]]
+  for = "/_nuxt/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

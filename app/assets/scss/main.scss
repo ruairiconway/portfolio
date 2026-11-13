@@ -1,0 +1,10 @@
+// Global foundations, loaded on every page (nuxt.config.ts `css`).
+//
+// Everything else mirrors app/: a Vue file's styles live at the same path
+// under assets/scss/ and are loaded with <style lang="scss" src="...">.
+//   app/app.vue                   -> assets/scss/app.scss (in nuxt.config `css`)
+//   app/components/SiteHeader.vue -> assets/scss/components/SiteHeader.scss
+//   app/components/blocks/Quote.vue -> assets/scss/components/blocks/Quote.scss
+
+@use 'base/root';
+@use 'base/reset';

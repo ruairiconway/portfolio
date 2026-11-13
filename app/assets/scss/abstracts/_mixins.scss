@@ -1,0 +1,15 @@
+@use 'sass:map';
+@use 'variables' as *;
+
+// Usage: @include up(md) { ... }
+@mixin up($name) {
+  @media (min-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}
+
+@mixin dark {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}

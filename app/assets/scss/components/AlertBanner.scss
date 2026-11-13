@@ -1,0 +1,27 @@
+// Styles for app/components/AlertBanner.vue (scoped).
+// Abstracts ($variables, @include mixins) are auto-injected.
+
+.alert-banner {
+  padding: 0.5rem $gutter;
+  text-align: center;
+  font-size: 0.875rem;
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    margin-left: 0.5rem;
+    font-weight: 600;
+  }
+
+  &--info {
+    background: var(--color-banner-info-bg);
+    color: var(--color-banner-info-fg);
+  }
+
+  &--warning {
+    background: var(--color-banner-warning-bg);
+    color: var(--color-banner-warning-fg);
+  }
+}

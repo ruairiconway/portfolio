@@ -1,0 +1,9 @@
+{
+  "enabled": false,
+  "tone": "info",
+  "message": "We're launching something new soon.",
+  "link": {
+    "label": "Find out more",
+    "url": "/blog"
+  }
+}

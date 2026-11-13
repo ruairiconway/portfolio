@@ -1,0 +1,14 @@
+// Compile-time design tokens. Runtime/theme colours live as CSS custom
+// properties in base/_root.scss so they can switch with dark mode.
+$max-width: 44rem;
+$gutter: 1rem;
+
+// To use your own font, add its files to app/assets/fonts/ and put its name first:
+// $font-sans: 'BrandSans', system-ui, …  (see Fonts in the README)
+$font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+);

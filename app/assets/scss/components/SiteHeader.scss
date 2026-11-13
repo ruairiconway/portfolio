@@ -1,0 +1,32 @@
+// Styles for app/components/SiteHeader.vue (scoped).
+// Abstracts ($variables, @include mixins) are auto-injected.
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gutter;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+}
+
+.brand {
+  font-weight: 700;
+  text-decoration: none;
+
+  &__logo {
+    display: block;
+    height: 2rem;
+    width: auto;
+  }
+}
+
+nav {
+  display: flex;
+  gap: $gutter;
+
+  a.router-link-exact-active {
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: 2px;
+  }
+}

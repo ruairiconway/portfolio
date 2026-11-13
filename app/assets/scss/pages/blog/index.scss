@@ -1,0 +1,15 @@
+// Styles for app/pages/blog/index.vue (scoped).
+// Abstracts ($variables, @include mixins) are auto-injected.
+
+.post-list {
+  list-style: none;
+  padding: 0;
+
+  li {
+    margin-bottom: $gutter * 1.5;
+
+    @include up(md) {
+      margin-bottom: $gutter * 2;
+    }
+  }
+}

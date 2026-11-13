@@ -1,0 +1,5 @@
+// Auto-injected into every SCSS file and <style lang="scss"> block
+// (see vite.css.preprocessorOptions in nuxt.config.ts).
+// Only put things here that emit NO CSS: variables, mixins, functions.
+@forward 'variables';
+@forward 'mixins';

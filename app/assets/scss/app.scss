@@ -1,0 +1,14 @@
+// Styles for app/app.vue: the layout shell plus small global helpers.
+// Not scoped, so these classes work in every page and component.
+
+.layout {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 0 $gutter;
+}
+
+.meta {
+  display: block;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
