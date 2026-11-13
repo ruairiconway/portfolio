@@ -61,6 +61,9 @@ const lenisOptions = {
   anchors: true, // smooth-scroll to #anchor links
   stopInertiaOnNavigate: true, // don't carry momentum onto the next page
 }
+
+// Dev-only column overlay, toggled with the | key (see partials/DevGrid.vue).
+const isDev = import.meta.dev
 </script>
 
 <template>
@@ -73,4 +76,5 @@ const lenisOptions = {
     </main>
     <SiteFooter />
   </div>
+  <DevGrid v-if="isDev" />
 </template>
