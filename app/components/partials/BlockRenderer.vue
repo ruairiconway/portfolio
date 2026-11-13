@@ -25,5 +25,13 @@ const items = props.blocks.flatMap((block) => {
 </script>
 
 <template>
-  <component :is="item.component" v-for="(item, index) in items" :key="index" :block="item.block" />
+  <!-- Each block's Anchor ID (cms/fields/anchorId.ts) becomes the id of its root
+       element, so /page#pricing scrolls to it. -->
+  <component
+    :is="item.component"
+    v-for="(item, index) in items"
+    :id="item.block.anchorId || undefined"
+    :key="index"
+    :block="item.block"
+  />
 </template>

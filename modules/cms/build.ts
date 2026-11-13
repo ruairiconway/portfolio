@@ -1,29 +1,36 @@
 /**
- * Assembles the Sveltia CMS config from the .yml files in cms/.
+ * Assembles the Sveltia CMS config from the .ts files in cms/. Each file
+ * default-exports its part of the config, using the typed helpers in ./define.ts.
  *
- * - Every file except blocks and shared fields is a partial Sveltia config.
- *   They're deep-merged, config.yml first. Lists of named items (collections,
- *   singletons, files, fields) are merged by `name`, so several files can add
- *   to one collection.
- * - Files in cms/components/blocks/ each define one block. The block name is
- *   the filename in kebab-case (PullQuote.yml -> "pull-quote"), and the blocks
- *   replace any `types: '@blocks'` placeholder.
+ * - Every file except blocks and shared fields is a piece of the Sveltia config
+ *   (defineCms). They're deep-merged, config.ts first. Lists of named items
+ *   (collections, singletons, files, fields) are merged by `name`, so several
+ *   files can add to one collection.
+ * - Files in cms/components/blocks/ each define one block (defineBlock). The
+ *   block name is the filename in kebab-case (PullQuote.ts -> "pull-quote"),
+ *   and the blocks fill any `types: blocks` list. Every block also gets the
+ *   fields in BLOCK_FIELDS (an anchor ID), unless it defines a field of that name.
  * - Files in cms/fields/ and cms/components/partials/ each define one shared
- *   field. An item like `- '@fields/seo'` or `- '@partials/CmsVideo'` in any
- *   fields list is replaced by cms/fields/seo.yml or
- *   cms/components/partials/CmsVideo.yml. Partials are fields rendered by a
- *   matching component (app/components/partials/CmsVideo.vue).
+ *   field (defineField), imported wherever it's used. They're read here too, so
+ *   the generated types can name them (seo.ts -> SeoField). Partials are fields
+ *   rendered by a matching component (app/components/partials/CmsVideo.vue).
+ * - A file in cms/components/partials/ can also export `embed` (defineEmbed),
+ *   so editors can insert that partial into rich text (./embeds.ts). Its id is
+ *   the filename in kebab-case (CmsImage.ts -> "cms-image"), and the embeds
+ *   fill any `editor_components` list containing `embeds`.
  */
-import { readFileSync, readdirSync } from 'node:fs'
+import { readdirSync } from 'node:fs'
 import { basename, join, relative, sep } from 'node:path'
-import { parse } from 'yaml'
+import { createJiti } from 'jiti'
 
 export const SOURCE_DIR = 'cms'
 const BLOCKS_DIR = 'components/blocks'
-const BLOCKS_PLACEHOLDER = '@blocks'
-// Shared field folders, by the prefix that references them.
-const SHARED_DIRS = { '@fields': 'fields', '@partials': 'components/partials' } as const
-const FIELD_REF = /^@(fields|partials)\/.+$/
+const BLOCKS_PLACEHOLDER = '@blocks' // the value of `blocks` from ./define.ts
+const EMBEDS_PLACEHOLDER = '@embeds' // the value of `embeds` from ./define.ts
+const PARTIALS_DIR = 'components/partials'
+const SHARED_FIELD_DIRS = ['fields', PARTIALS_DIR]
+// Shared fields added to the end of every block's fields.
+const BLOCK_FIELDS = ['fields/anchorId.ts']
 
 export type Obj = Record<string, unknown>
 
@@ -34,6 +41,16 @@ const isNamed = (value: unknown): value is Obj & { name: string } =>
   isObject(value) && typeof value.name === 'string'
 
 const toKebab = (value: string) => value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()
+
+/**
+ * Fields whose Markdown is parsed at build time (./transform.ts) into an MDC
+ * tree: `markdown`, and `richtext` unless it's set to save HTML.
+ */
+export const isParsedMarkdown = (field: Obj) =>
+  field.widget === 'markdown' || (field.widget === 'richtext' && field.format !== 'html')
+
+/** "components/blocks/PullQuote.ts" -> "PullQuote" */
+export const fileStem = (file: string) => basename(file).replace(/\.ts$/, '')
 
 function merge(base: unknown, next: unknown): unknown {
   if (Array.isArray(base) && Array.isArray(next)) {
@@ -57,45 +74,55 @@ function merge(base: unknown, next: unknown): unknown {
   return next
 }
 
-function listYamlFiles(dir: string): string[] {
+function listSourceFiles(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true, recursive: true })
-    .filter((entry) => entry.isFile() && /\.ya?ml$/.test(entry.name))
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.ts') && !entry.name.endsWith('.d.ts'))
     .map((entry) => relative(dir, join(entry.parentPath, entry.name)).split(sep).join('/'))
     .sort()
 }
 
-function readYaml(dir: string, file: string): Obj {
-  const data: unknown = parse(readFileSync(join(dir, file), 'utf8'))
-  if (!isObject(data)) throw new Error(`${SOURCE_DIR}/${file} must contain a YAML object`)
+// No caching, so each build reads the files as they are now (dev restarts
+// re-run it after every change).
+const jiti = createJiti(import.meta.url, { moduleCache: false, fsCache: false })
+
+/** A file's exports: `default`, and `embed` for partials. Undefined if not exported. */
+function loadExports(dir: string, file: string): { default?: Obj; embed?: Obj } {
+  let mod: Record<string, unknown>
+  try {
+    mod = (jiti(join(dir, file)) ?? {}) as Record<string, unknown>
+  } catch (error) {
+    throw new Error(`${SOURCE_DIR}/${file}: ${(error as Error).message}`)
+  }
+  const copy = (name: string): Obj | undefined => {
+    const data = mod[name]
+    if (data === undefined) return undefined
+    if (!isObject(data)) throw new Error(`${SOURCE_DIR}/${file}: the \`${name}\` export must be an object`)
+    try {
+      // A copy, so merging and filling in placeholders never changes a shared import.
+      return structuredClone(data)
+    } catch {
+      throw new Error(`${SOURCE_DIR}/${file} must export plain data: no functions or class instances`)
+    }
+  }
+  return { default: copy('default'), embed: copy('embed') }
+}
+
+function loadDefault(dir: string, file: string): Obj {
+  const data = loadExports(dir, file).default
+  if (!data) throw new Error(`${SOURCE_DIR}/${file} must default-export an object (defineCms, defineBlock or defineField)`)
   return data
 }
 
-/** "@partials/CmsVideo" -> "components/partials/CmsVideo.yml" */
-export function refToFile(ref: string): string {
-  const [prefix, ...rest] = ref.split('/')
-  return `${SHARED_DIRS[prefix as keyof typeof SHARED_DIRS]}/${rest.join('/')}.yml`
-}
-
-/** "components/partials/CmsVideo.yml" -> "@partials/CmsVideo", or undefined if it isn't a shared field. */
-function fileToRef(file: string): string | undefined {
-  for (const [prefix, dir] of Object.entries(SHARED_DIRS)) {
-    if (file.startsWith(`${dir}/`)) return `${prefix}/${file.slice(dir.length + 1).replace(/\.ya?ml$/, '')}`
-  }
-}
-
-function replacePlaceholders(value: unknown, blocks: Obj[], fields: Map<string, Obj>): void {
+/** Fills in `types: blocks` and the `embeds` item of `editor_components` lists. */
+function fillPlaceholders(value: unknown, blocks: Obj[], embedIds: string[]): void {
   if (Array.isArray(value)) {
-    value.forEach((item, index) => {
-      if (typeof item === 'string' && FIELD_REF.test(item)) {
-        const field = fields.get(item)
-        if (!field) throw new Error(`"${item}" refers to ${SOURCE_DIR}/${refToFile(item)}, which doesn't exist`)
-        value[index] = structuredClone(field)
-      } else replacePlaceholders(item, blocks, fields)
-    })
+    const index = value.indexOf(EMBEDS_PLACEHOLDER)
+    if (index !== -1) value.splice(index, 1, ...embedIds.filter((id) => !value.includes(id)))
+    for (const item of value) fillPlaceholders(item, blocks, embedIds)
   } else if (isObject(value)) {
     for (const [key, child] of Object.entries(value)) {
       if (key === 'types' && child === BLOCKS_PLACEHOLDER) value[key] = structuredClone(blocks)
-      else replacePlaceholders(child, blocks, fields)
+      else fillPlaceholders(child, blocks, embedIds)
     }
   }
 }
@@ -107,7 +134,7 @@ function checkComplete(config: Obj): void {
     for (const item of items) {
       if (isNamed(item) && !item.fields && !item.files) {
         throw new Error(
-          `"${item.name}" is listed in ${SOURCE_DIR}/config.yml ${key} but no file in ${SOURCE_DIR}/ defines its fields`,
+          `"${item.name}" is listed in ${SOURCE_DIR}/config.ts ${key} but no file in ${SOURCE_DIR}/ defines its fields`,
         )
       }
     }
@@ -117,40 +144,76 @@ function checkComplete(config: Obj): void {
 export interface CmsBuild {
   /** The full Sveltia CMS config. */
   config: Obj
-  /** Block definitions from cms/components/blocks/, by file, with shared fields filled in. */
+  /** Block definitions from cms/components/blocks/, by file. */
   blocks: { file: string; name: string; definition: Obj }[]
-  /** Shared fields from cms/fields/ and cms/components/partials/, by reference (e.g. "@fields/seo"). */
+  /** Shared fields from cms/fields/ and cms/components/partials/, by file (e.g. "fields/seo.ts"). */
   fields: Map<string, Obj>
+  /** Partials that can be inserted into rich text, from their `embed` exports. */
+  embeds: CmsEmbedBuild[]
+}
+
+export interface CmsEmbedBuild {
+  /** The editor component id and the MDC tag in the Markdown: "cms-image". */
+  id: string
+  /** The Vue partial that renders it: "CmsImage" (app/components/partials/CmsImage.vue). */
+  component: string
+  /** The cms/ file it's defined in. */
+  file: string
+  /** The defineEmbed() options. */
+  definition: Obj
 }
 
 export function buildCms(sourceDir: string): CmsBuild {
-  const files = listYamlFiles(sourceDir)
+  const files = listSourceFiles(sourceDir)
   const isBlock = (file: string) => file.startsWith(`${BLOCKS_DIR}/`)
-  const isField = (file: string) => fileToRef(file) !== undefined
+  const isField = (file: string) => SHARED_FIELD_DIRS.some((dir) => file.startsWith(`${dir}/`))
 
-  // config.yml first so it sets the base config and sidebar order.
+  // config.ts first so it sets the base config and sidebar order.
   const partials = files.filter((file) => !isBlock(file) && !isField(file))
-  partials.sort((a, b) => Number(b === 'config.yml') - Number(a === 'config.yml'))
+  partials.sort((a, b) => Number(b === 'config.ts') - Number(a === 'config.ts'))
 
   let config: Obj = {}
-  for (const file of partials) config = merge(config, readYaml(sourceDir, file)) as Obj
+  for (const file of partials) config = merge(config, loadDefault(sourceDir, file)) as Obj
 
+  // Shared fields. A partial may export only an `embed`, with no field of its own.
+  const fields = new Map<string, Obj>()
+  const embeds: CmsEmbedBuild[] = []
+  for (const file of files.filter(isField)) {
+    const { default: field, embed } = loadExports(sourceDir, file)
+    if (embed && file.startsWith(`${PARTIALS_DIR}/`)) {
+      embeds.push({ id: toKebab(fileStem(file)), component: fileStem(file), file: `${SOURCE_DIR}/${file}`, definition: embed })
+    }
+    if (field) fields.set(file, field)
+    else if (!embed) {
+      throw new Error(`${SOURCE_DIR}/${file} must default-export a field (defineField)${file.startsWith(`${PARTIALS_DIR}/`) ? ' or export an embed (defineEmbed)' : ''}`)
+    }
+  }
+
+  const blockFields = BLOCK_FIELDS.map((file) => {
+    const field = fields.get(file)
+    if (!field) throw new Error(`${SOURCE_DIR}/${file} is missing: every block's fields include it`)
+    return field
+  })
   const blockFiles = files.filter(isBlock)
   const blocks: Obj[] = blockFiles.map((file) => {
-    const { name: _ignored, ...block } = readYaml(sourceDir, file)
-    return { name: toKebab(basename(file).replace(/\.ya?ml$/, '')), widget: 'object', ...block }
+    const { name: _ignored, ...block } = loadDefault(sourceDir, file)
+    const own = Array.isArray(block.fields) ? block.fields : []
+    const added = blockFields.filter((field) => !own.some((item) => isNamed(item) && item.name === field.name))
+    return { name: toKebab(fileStem(file)), widget: 'object', ...block, fields: [...own, ...structuredClone(added)] }
   })
-  const fields = new Map(
-    files.filter(isField).map((file) => [fileToRef(file)!, readYaml(sourceDir, file)]),
-  )
-  // Shared fields can be used inside blocks too, so fill those first.
-  replacePlaceholders(blocks, blocks, fields)
-  replacePlaceholders(config, blocks, fields)
+
+  const embedIds = embeds.map((embed) => embed.id)
+  // Shared fields too, so they still match their copies in blocks and the
+  // generated types can name them (CmsRichTextField).
+  for (const field of fields.values()) fillPlaceholders(field, blocks, embedIds)
+  fillPlaceholders(blocks, blocks, embedIds)
+  fillPlaceholders(config, blocks, embedIds)
   checkComplete(config)
 
   return {
     config,
     blocks: blocks.map((definition, index) => ({ file: `${SOURCE_DIR}/${blockFiles[index]}`, name: definition.name as string, definition })),
     fields,
+    embeds,
   }
 }

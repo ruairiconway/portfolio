@@ -1,0 +1,97 @@
+// Styles for app/components/partials/CmsRichText.vue (scoped).
+// Abstracts ($variables, @include mixins) are auto-injected.
+//
+// The formatted text is rendered by <MDCRenderer>, so its elements are reached
+// with :deep(). Spacing uses `em`, so it scales with the text size.
+
+.cms-rich-text {
+  // Space between consecutive elements (paragraphs, headings, lists…).
+  :deep(> * + *) {
+    margin-top: 1em;
+  }
+
+  :deep(> :first-child) {
+    margin-top: 0;
+  }
+
+  :deep(h2),
+  :deep(h3),
+  :deep(h4) {
+    line-height: 1.25;
+  }
+
+  :deep(* + h2),
+  :deep(* + h3),
+  :deep(* + h4) {
+    margin-top: 1.75em;
+  }
+
+  :deep(h2) {
+    font-size: 1.5em;
+  }
+
+  :deep(h3) {
+    font-size: 1.25em;
+  }
+
+  // Headings link to themselves (#id anchors, added by the renderer): keep them
+  // looking like headings.
+  :deep(:is(h2, h3, h4) > a) {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  :deep(:not(:is(h2, h3, h4)) > a) {
+    color: inherit;
+    text-decoration-color: clr(accent);
+    text-underline-offset: 0.15em;
+
+    &:hover {
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  :deep(ul),
+  :deep(ol) {
+    padding-left: 1.25em;
+  }
+
+  :deep(li + li) {
+    margin-top: 0.25em;
+  }
+
+  :deep(blockquote) {
+    margin-inline: 0;
+    padding-left: 1em;
+    border-left: 3px solid clr(accent);
+    color: clr(muted);
+  }
+
+  :deep(hr) {
+    margin-block: 2em;
+    border: 0;
+    border-top: 1px solid clr(fg, 0.15);
+  }
+
+  :deep(code) {
+    padding: 0.1em 0.3em;
+    border-radius: 0.25em;
+    background: clr(fg, 0.08);
+    font-size: 0.9em;
+  }
+
+  // Wide tables scroll sideways instead of widening the page.
+  :deep(table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+  }
+
+  :deep(th),
+  :deep(td) {
+    padding: 0.5em 0.75em;
+    border-bottom: 1px solid clr(fg, 0.15);
+    text-align: left;
+  }
+}

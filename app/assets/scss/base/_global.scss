@@ -8,12 +8,10 @@
 
 body {
   margin: 0;
-  background: var(--color-bg);
-  color: var(--color-fg);
+  background: clr(bg);
+  color: clr(fg);
   font-family: $font-sans;
   line-height: 1.6;
-
-  min-height: 300svh;
 }
 
 a {

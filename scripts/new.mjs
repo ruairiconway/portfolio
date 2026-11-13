@@ -3,7 +3,7 @@
  * Scaffolds a page block: its CMS fields, component and styles, at mirrored paths.
  *
  *   pnpm new block Quote
- *     cms/components/blocks/Quote.yml                  CMS fields
+ *     cms/components/blocks/Quote.ts                   CMS fields
  *     app/components/blocks/Quote.vue                  component (typed with QuoteBlock from #cms)
  *     app/assets/scss/components/blocks/Quote.scss     styles
  *
@@ -47,7 +47,7 @@ const label = type.replace(/-/g, ' ').replace(/^./, (char) => char.toUpperCase()
 const typeName = `${name}Block`
 
 const paths = {
-  cms: `cms/components/blocks/${name}.yml`,
+  cms: `cms/components/blocks/${name}.ts`,
   vue: `app/components/blocks/${name}.vue`,
   scss: `app/assets/scss/components/blocks/${name}.scss`,
 }
@@ -57,12 +57,14 @@ const paths = {
 const files = new Map([
   [
     paths.cms,
-    `# Mirrors ${paths.vue}.
-# Type: "${type}" -> <Block${name}>. Types: import type { ${typeName} } from '#cms'
+    `// Mirrors ${paths.vue}.
+// Type: "${type}" -> <Block${name}>. Types: import type { ${typeName} } from '#cms'
+import { defineBlock } from '../../../modules/cms/define'
 
-label: ${label}
-fields:
-  - { name: heading, label: Heading, widget: string }
+export default defineBlock({
+  label: '${label}',
+  fields: [{ name: 'heading', label: 'Heading', widget: 'string' }],
+})
 `,
   ],
   [
@@ -75,6 +77,7 @@ defineProps<{ block: ${typeName} }>()
 </script>
 
 <template>
+  <!-- One root element: it gets the block's Anchor ID as its id (BlockRenderer). -->
   <section class="${type}">
     <h2>{{ block.heading }}</h2>
   </section>
@@ -89,7 +92,7 @@ defineProps<{ block: ${typeName} }>()
 // Abstracts ($variables, @include mixins) are auto-injected.
 
 .${type} {
-  padding: $gutter * 2 0;
+  padding: $grid-gutter * 2 0;
 }
 `,
   ],

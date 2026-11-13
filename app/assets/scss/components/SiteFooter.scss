@@ -3,13 +3,13 @@
 
 .site-footer {
   padding: 3rem 0 2rem;
-  color: var(--color-muted);
+  color: clr(muted);
   font-size: 0.875rem;
 
   nav {
     display: flex;
     flex-wrap: wrap;
-    gap: $gutter;
+    gap: $grid-gutter;
   }
 
   p {

@@ -6,10 +6,10 @@
   padding: 0;
 
   li {
-    margin-bottom: $gutter * 1.5;
+    margin-bottom: $grid-gutter * 1.5;
 
-    @include up(md) {
-      margin-bottom: $gutter * 2;
+    @include mq(tablet) {
+      margin-bottom: $grid-gutter * 2;
     }
   }
 }

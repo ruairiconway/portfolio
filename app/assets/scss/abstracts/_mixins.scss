@@ -1,8 +1,8 @@
 @use 'sass:map';
 @use 'variables' as *;
 
-// Usage: @include up(md) { ... }
-@mixin up($name) {
+// Usage: @include mq(tablet) { ... } (names in $breakpoints, abstracts/_variables.scss)
+@mixin mq($name) {
   @media (min-width: map.get($breakpoints, $name)) {
     @content;
   }

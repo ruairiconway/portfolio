@@ -20,7 +20,7 @@
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { z } from 'zod'
-import { buildCms, isObject, type Obj } from './build'
+import { buildCms, isObject, isParsedMarkdown, type Obj } from './build'
 
 type Target = { collection: string; file?: string } | { singleton: string }
 
@@ -101,7 +101,9 @@ function valueSchema(field: Obj): z.ZodType {
       if (isObject(field.field)) return z.array(valueSchema(field.field))
       return z.array(z.string())
     case 'markdown':
-      // Parsed at build time (./transform.ts) into an MDC tree.
+    case 'richtext':
+      // Parsed at build time (./transform.ts) into an MDC tree, unless it's HTML.
+      if (!isParsedMarkdown(field)) return z.string()
       return z.looseObject({ type: z.literal('root'), children: z.array(z.any()) })
     default:
       return z.string()

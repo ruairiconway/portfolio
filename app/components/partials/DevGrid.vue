@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Column overlay for checking layout against the grid. Dev mode only
 // (rendered from app.vue behind import.meta.dev). Toggle with the | key.
-// Settings (columns, gutters): assets/scss/components/partials/DevGrid.scss
+// Grid settings (columns, gutters): assets/scss/abstracts/_variables.scss
 // MAX_COLUMNS only needs to be >= the largest column count set there; extra
 // columns are hidden by the stylesheet.
 const MAX_COLUMNS = 24

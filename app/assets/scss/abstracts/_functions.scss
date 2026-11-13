@@ -1,0 +1,78 @@
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'variables' as *;
+
+// A colour from $colors (abstracts/_variables.scss), optionally see-through:
+//
+//   color: clr(fg);
+//   background: clr(black, 0.6);    // 60% opacity
+//   border-color: clr(accent, 20%); // a percentage works too
+//
+// Returns the colour's custom property (var(--color-fg)), so it switches in
+// dark mode. With an opacity, it's mixed with transparent using color-mix().
+@function clr($name, $opacity: null) {
+  // As a string, so colour keywords like black and white work unquoted.
+  $name: '' + $name;
+  @if not map.has-key($colors, $name) {
+    @error 'clr(): there is no colour "#{$name}" in $colors. Choose from: #{map.keys($colors)}.';
+  }
+  @if $opacity == null {
+    @return var(--color-#{$name});
+  }
+  @if meta.type-of($opacity) != 'number' or not (math.is-unitless($opacity) or math.unit($opacity) == '%') {
+    @error 'clr(): $opacity must be a number from 0 to 1, or a percentage. Got #{meta.inspect($opacity)}.';
+  }
+  $percent: $opacity;
+  @if math.is-unitless($opacity) {
+    $percent: $opacity * 100%;
+  }
+  @if $percent < 0% or $percent > 100% {
+    @error 'clr(): $opacity must be between 0 and 1 (or 0% and 100%). Got #{meta.inspect($opacity)}.';
+  }
+  @return color-mix(in srgb, var(--color-#{$name}) #{$percent}, transparent);
+}
+
+// The width of a span of the layout grid, for any property:
+//
+//   width: width(3, 2);          // 3 columns and the 2 gutters between them
+//   margin-left: width(1, 1);    // shift by one column and its gutter
+//   width: width(8, 7, 2);       // the full page, edge to edge
+//
+// $columns:       how many columns
+// $grid-gutters:       how many gutters (between columns)
+// $outer-gutters: how many outer gutters (the page edges). Optional, 0 by default.
+//
+// Returns a calc() using the --grid-* custom properties (base/_root.scss), so it
+// follows the column count at each breakpoint. Columns are sized from the
+// viewport, so use it on elements that sit on the page grid.
+@function width($columns, $grid-gutters, $outer-gutters: 0) {
+  $sum: _add('', _count('columns', $columns), '--grid-column');
+  $sum: _add($sum, _count('gutters', $grid-gutters), '--grid-gutter');
+  $sum: _add($sum, _count('outer-gutters', $outer-gutters), '--grid-outer-gutter');
+
+  @if $sum == '' {
+    @return 0;
+  }
+  @return calc(#{$sum});
+}
+
+// Adds `var(<property>) * <count>` to a calc() sum, skipping counts of 0.
+@function _add($sum, $count, $property) {
+  @if $count == 0 {
+    @return $sum;
+  }
+  $term: 'var(#{$property}) * #{$count}';
+  @if $sum == '' {
+    @return $term;
+  }
+  @return '#{$sum} + #{$term}';
+}
+
+// Returns $value if it's a valid count (a unitless number, 0 or more).
+@function _count($name, $value) {
+  @if meta.type-of($value) != 'number' or not math.is-unitless($value) or $value < 0 {
+    @error 'width(): $#{$name} must be a number of 0 or more, without units. Got #{meta.inspect($value)}.';
+  }
+  @return $value;
+}

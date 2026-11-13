@@ -1,13 +1,10 @@
 // Styles for app/components/partials/DevGrid.vue (scoped).
 // Abstracts ($variables, @include mixins) are auto-injected.
 
-// ---- Grid settings ---------------------------------------------------------
-$dev-grid-columns: 8; // columns from the md breakpoint up
-$dev-grid-columns-mobile: 4; // columns below the md breakpoint
-$dev-grid-gutter: 1rem; // space between columns
-$dev-grid-outer-gutter: 1rem; // space at the left and right edges of the page
+// Grid settings (columns, gutters) are shared: abstracts/_variables.scss.
+$dev-grid-columns: $grid-columns;
+$dev-grid-columns-mobile: $grid-columns-mobile;
 $dev-grid-color: rgb(255 0 0 / 10%);
-// ----------------------------------------------------------------------------
 
 .dev-grid {
   position: fixed;
@@ -18,11 +15,11 @@ $dev-grid-color: rgb(255 0 0 / 10%);
   &__inner {
     display: grid;
     grid-template-columns: repeat($dev-grid-columns-mobile, minmax(0, 1fr));
-    column-gap: $dev-grid-gutter;
+    column-gap: var(--grid-gutter);
     height: 100%;
-    padding-inline: $dev-grid-outer-gutter;
+    padding-inline: var(--grid-outer-gutter);
 
-    @include up(md) {
+    @include mq($grid-breakpoint) {
       grid-template-columns: repeat($dev-grid-columns, minmax(0, 1fr));
     }
   }
@@ -34,7 +31,7 @@ $dev-grid-color: rgb(255 0 0 / 10%);
       display: none;
     }
 
-    @include up(md) {
+    @include mq($grid-breakpoint) {
       &:nth-child(n + #{$dev-grid-columns-mobile + 1}) {
         display: block;
       }

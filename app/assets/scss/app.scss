@@ -4,11 +4,11 @@
 .layout {
   max-width: $max-width;
   margin: 0 auto;
-  padding: 0 $gutter;
+  padding: 0 $grid-gutter;
 }
 
 .meta {
   display: block;
-  color: var(--color-muted);
+  color: clr(muted);
   font-size: 0.875rem;
 }

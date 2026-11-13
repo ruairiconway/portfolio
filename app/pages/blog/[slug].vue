@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// CMS fields: cms/pages/blog/[slug].yml
+// CMS fields: cms/pages/blog/[slug].ts
 const route = useRoute()
 
 const { data: post } = await useAsyncData(`post-${route.path}`, () =>
@@ -24,7 +24,7 @@ usePageSeo({
     <NuxtLink to="/blog">← All posts</NuxtLink>
     <h1>{{ post.title }}</h1>
     <time class="meta" :datetime="post.date">{{ post.date }}</time>
-    <CmsImage :image="post.image" :alt="post.imageAlt ?? ''" sizes="sm:100vw md:720px" priority />
+    <CmsImage :image="post.image" :alt="post.imageAlt ?? ''" sizes="phone:100vw tablet:720px" priority />
     <ContentRenderer :value="post" />
   </article>
 </template>

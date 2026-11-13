@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// CMS fields: cms/components/SiteHeader.yml
+// CMS fields: cms/components/SiteHeader.ts
 const { data: site } = await useSiteSettings()
 const { data: nav } = await useAsyncData('header-nav', () =>
   queryCollection('headerNav').first(),
@@ -9,7 +9,7 @@ const { data: nav } = await useAsyncData('header-nav', () =>
 <template>
   <header class="site-header">
     <NuxtLink to="/" class="brand">
-      <CmsImage v-if="site?.logo" :image="site.logo" :alt="site.title" sizes="240px" priority class="brand__logo" />
+      <CmsImage v-if="site?.logo" :image="site.logo" :alt="site.title" sizes="phone:240px" priority class="brand__logo" />
       <template v-else>{{ site?.title }}</template>
     </NuxtLink>
     <nav v-if="nav?.items.length" aria-label="Main">

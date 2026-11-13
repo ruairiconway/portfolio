@@ -1,4 +1,4 @@
-import type { SeoField } from '#cms' // generated from cms/fields/seo.yml
+import type { SeoField } from '#cms' // generated from cms/fields/seo.ts
 
 interface PageSeo {
   title?: string

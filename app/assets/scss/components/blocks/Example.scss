@@ -2,5 +2,5 @@
 // Abstracts ($variables, @include mixins) are auto-injected.
 
 .example {
-  padding: $gutter * 2 0;
+  padding: $grid-gutter * 2 0;
 }

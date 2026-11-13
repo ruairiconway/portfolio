@@ -4,10 +4,10 @@
  *
  *   import type { QuoteBlock, Block, SeoField, PagesEntry } from '#cms'
  *
- * - <Name>Block for each file in cms/components/blocks/ (Quote.yml -> QuoteBlock),
+ * - <Name>Block for each file in cms/components/blocks/ (Quote.ts -> QuoteBlock),
  *   with `type` set to the block's name, plus `Block`, a union of all of them.
  * - <Name>Field for each shared field in cms/fields/ and cms/components/partials/
- *   (seo.yml -> SeoField, CmsVideo.yml -> CmsVideoField).
+ *   (seo.ts -> SeoField, CmsVideo.ts -> CmsVideoField).
  * - <Name>Entry for each folder collection: one entry's data (pages -> PagesEntry).
  * - <Collection><File>File for each file in a files collection
  *   (navigation/header -> NavigationHeaderFile).
@@ -24,7 +24,7 @@
  * `body` is left out of entry types, since Nuxt Content provides it.
  * Fields with `required: false`, and booleans (which can be absent), are optional.
  */
-import { isObject, refToFile, type CmsBuild, type Obj } from './build'
+import { fileStem, isObject, isParsedMarkdown, type CmsBuild, type Obj } from './build'
 
 const toPascal = (value: string) =>
   value.replace(/(^|[-_\s]+)([a-zA-Z0-9])/g, (_match, _separator, char: string) => char.toUpperCase())
@@ -106,21 +106,22 @@ function fieldType(field: Obj, depth: number): string {
       if (isObject(field.field)) return `Array<${fieldType(field.field, depth)}>`
       return 'string[]'
     case 'markdown':
-      return 'MDCRoot'
+    case 'richtext':
+      return isParsedMarkdown(field) ? 'MDCRoot' : 'string'
     default:
       // string, text, richtext, datetime, color, code, map, uuid, compute
       return 'string'
   }
 }
 
-/** "@fields/seo" -> "SeoField", "@partials/CmsVideo" -> "CmsVideoField" */
-const fieldTypeName = (ref: string) => `${toPascal(ref.split('/').pop()!)}Field`
+/** "fields/seo.ts" -> "SeoField", "components/partials/CmsVideo.ts" -> "CmsVideoField" */
+const fieldTypeName = (file: string) => `${toPascal(fileStem(file))}Field`
 
 export function generateTypes({ config, blocks, fields }: CmsBuild): string {
   blockTypeNames = new Map(blocks.map(({ name }) => [name, `${toPascal(name)}Block`]))
   // Registered before anything is written, so blocks can refer to shared fields too.
   sharedFieldTypes = new Map(
-    [...fields].map(([ref, field]) => [JSON.stringify(field), fieldTypeName(ref)]),
+    [...fields].map(([file, field]) => [JSON.stringify(field), fieldTypeName(file)]),
   )
 
   const out: string[] = [
@@ -157,14 +158,14 @@ export function generateTypes({ config, blocks, fields }: CmsBuild): string {
     '  /** Any page block. Narrow it by `type`. */',
     // With no blocks yet, a bare shape keeps code that handles blocks generically
     // (like <BlockRenderer>) type-checking.
-    `  export type Block = ${blockNames.length ? blockNames.join(' | ') : '{ type: string }'}`,
+    `  export type Block = ${blockNames.length ? blockNames.join(' | ') : '{ type: string; anchorId?: string }'}`,
     '',
   )
 
-  for (const [ref, field] of fields) {
-    const typeName = fieldTypeName(ref)
+  for (const [file, field] of fields) {
+    const typeName = fieldTypeName(file)
     out.push(
-      `  /** ${field.label ?? ref}. Fields: cms/${refToFile(ref)}, used as \`- '${ref}'\` */`,
+      `  /** ${field.label ?? file}. Fields: cms/${file} */`,
       `  export type ${typeName} = ${fieldType(field, 1)}`,
       '',
     )

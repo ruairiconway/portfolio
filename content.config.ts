@@ -15,36 +15,36 @@ export default defineContentConfig({
     pages: defineCollection({
       type: 'page',
       source: { include: 'pages/**/*.md', prefix: '/' },
-      schema: cmsSchema({ collection: 'pages' }, { omit: ['path'] }), // cms/pages/[...slug].yml
+      schema: cmsSchema({ collection: 'pages' }, { omit: ['path'] }), // cms/pages/[...slug].ts
     }),
 
     // content/posts/*.md -> /blog/<slug>
     posts: defineCollection({
       type: 'page',
       source: { include: 'posts/**/*.md', prefix: '/blog' },
-      schema: cmsSchema({ collection: 'posts' }, { omit: ['body'] }), // cms/pages/blog/[slug].yml
+      schema: cmsSchema({ collection: 'posts' }, { omit: ['body'] }), // cms/pages/blog/[slug].ts
     }),
 
     // Navigation: one file per area, grouped as a collection in the CMS.
     alertBanner: defineCollection({
       type: 'data',
       source: 'navigation/alert-banner.json',
-      schema: cmsSchema({ collection: 'navigation', file: 'alert-banner' }), // cms/components/AlertBanner.yml
+      schema: cmsSchema({ collection: 'navigation', file: 'alert-banner' }), // cms/components/AlertBanner.ts
     }),
 
     headerNav: defineCollection({
       type: 'data',
       source: 'navigation/header.json',
-      schema: cmsSchema({ collection: 'navigation', file: 'header' }), // cms/components/SiteHeader.yml
+      schema: cmsSchema({ collection: 'navigation', file: 'header' }), // cms/components/SiteHeader.ts
     }),
 
     footerNav: defineCollection({
       type: 'data',
       source: 'navigation/footer.json',
-      schema: cmsSchema({ collection: 'navigation', file: 'footer' }), // cms/components/SiteFooter.yml
+      schema: cmsSchema({ collection: 'navigation', file: 'footer' }), // cms/components/SiteFooter.ts
     }),
 
-    // Global settings. Each file is a singleton in the CMS (cms/app.yml).
+    // Global settings. Each file is a singleton in the CMS (cms/app.ts).
     site: defineCollection({
       type: 'data',
       source: 'settings/site.json',

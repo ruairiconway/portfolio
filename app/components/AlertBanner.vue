@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// CMS fields: cms/components/AlertBanner.yml
+// CMS fields: cms/components/AlertBanner.ts
 const { data: banner } = await useAsyncData('alert-banner', () =>
   queryCollection('alertBanner').first(),
 )

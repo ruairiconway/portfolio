@@ -3,9 +3,9 @@
  * content file. For every file, this finds its CMS definition in cms/ and,
  * wherever those fields are (blocks, lists, objects, singletons):
  *
- * - `widget: markdown`: parses the Markdown into an MDC tree, so the browser
- *   never needs a Markdown parser (~200 KB of gzipped JavaScript). Render it
- *   with <MDCRenderer :body="…">.
+ * - `widget: markdown` and `widget: richtext` (unless `format: html`): parses
+ *   the Markdown into an MDC tree, so the browser never needs a Markdown
+ *   parser (~200 KB of gzipped JavaScript). Render it with <CmsRichText>.
  * - `widget: image`: turns the path into `{ src, width, height }`, reading the
  *   dimensions from the file in public/. <CmsImage> uses them for `width` and
  *   `height` attributes, so images never shift the layout as they load.
@@ -17,7 +17,8 @@ import { readFileSync } from 'node:fs'
 import { join, relative, sep } from 'node:path'
 import { createMarkdownParser } from '@nuxtjs/mdc/runtime'
 import { imageSize } from 'image-size'
-import { isObject, type Obj } from './build'
+import { isObject, isParsedMarkdown, type CmsBuild, type Obj } from './build'
+import { transformEmbeds } from './embeds'
 
 export interface CmsImage {
   src: string
@@ -96,17 +97,32 @@ async function transformNested(item: Obj, field: Obj, transform: Transform): Pro
 }
 
 /** Applies the transforms to one content file in place. */
-export async function transformContent(config: Obj, rootDir: string, file: { path: string }, content: Obj): Promise<void> {
+export async function transformContent(
+  { config, embeds }: Pick<CmsBuild, 'config' | 'embeds'>,
+  rootDir: string,
+  file: { path: string },
+  content: Obj,
+): Promise<void> {
   const contentPath = relative(rootDir, file.path).split(sep).join('/')
   const fields = findDefinition(config, contentPath)
   if (!fields) return
 
-  await transformFields(content, fields, async (value, field) => {
-    if (field.widget === 'markdown' && typeof value === 'string') return parseMarkdown(value)
+  // Rich text embeds (./embeds.ts), by tag: their fields are transformed too.
+  const embedFields = new Map(
+    embeds.map((embed) => [embed.id, (Array.isArray(embed.definition.fields) ? embed.definition.fields : []).filter(isObject)]),
+  )
+
+  const transform: Transform = async (value, field) => {
+    if (isParsedMarkdown(field) && typeof value === 'string') {
+      const tree = await parseMarkdown(value)
+      await transformEmbeds(tree, embedFields, (data, nested) => transformFields(data, nested, transform))
+      return tree
+    }
     if (field.widget === 'image') {
       if (typeof value === 'string') return value ? toImage(value, rootDir) : undefined
       if (Array.isArray(value)) return value.filter((src) => typeof src === 'string' && src).map((src) => toImage(src, rootDir))
     }
     return value
-  })
+  }
+  await transformFields(content, fields, transform)
 }

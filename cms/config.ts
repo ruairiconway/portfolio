@@ -1,0 +1,60 @@
+// Base Sveltia CMS config. Mirrors nuxt.config.ts.
+//
+// public/admin/config.yml is GENERATED from every .ts file in cms/ by
+// modules/cms/ (which also generates TypeScript types: import type { QuoteBlock }
+// from '#cms'). Edit these files, not the generated config.
+//
+// The `collections` and `singletons` lists below only set the sidebar order
+// (and define groups like Navigation). Their fields come from the matching
+// files elsewhere in cms/, merged in by `name`.
+import { defineCms } from '../modules/cms/define'
+
+export default defineCms({
+  backend: {
+    name: 'github',
+    repo: 'OWNER/REPO', // TODO: set to your GitHub "owner/repo"
+    branch: 'main',
+    // Login uses Netlify's GitHub OAuth provider by default (base_url defaults to
+    // https://api.netlify.com). See README → "Deploying to Netlify".
+  },
+
+  media_folder: 'public/images/uploads',
+  public_folder: '/images/uploads',
+
+  // Uploads are processed in the browser before they're committed, so the repo
+  // never stores full-size originals. https://sveltiacms.app/en/docs/media
+  media_libraries: {
+    all: {
+      max_file_size: 20_000_000, // 20 MB
+      // Unique, URL-safe names (hero-photo-a1b2c3.webp), so a replaced image
+      // never reuses an old URL that browsers or the CDN may have cached.
+      slugify_filename: true,
+      filename_template: '{{filename}}-{{uuid_short}}',
+      transformations: {
+        // JPEG, PNG, HEIC etc. -> WebP, at most 2560 px on the long side.
+        raster_image: { format: 'webp', quality: 82, width: 2560, height: 2560 },
+        svg: { optimize: true },
+      },
+    },
+  },
+
+  site_url: 'https://example.netlify.app', // TODO: your live URL
+  display_url: 'https://example.netlify.app',
+
+  collections: [
+    { name: 'pages' }, // cms/pages/[...slug].ts
+    { name: 'posts' }, // cms/pages/blog/[slug].ts
+    {
+      // files from cms/components/{AlertBanner,SiteHeader,SiteFooter}.ts
+      name: 'navigation',
+      label: 'Navigation',
+      icon: 'menu',
+      editor: { preview: false },
+    },
+  ],
+
+  singletons: [
+    { name: 'site' }, // cms/app.ts
+    { name: 'seo' }, // cms/app.ts
+  ],
+})

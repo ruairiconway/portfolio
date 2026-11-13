@@ -2,7 +2,7 @@
 // Abstracts ($variables, @include mixins) are auto-injected.
 
 .alert-banner {
-  padding: 0.5rem $gutter;
+  padding: 0.5rem $grid-gutter;
   text-align: center;
   font-size: 0.875rem;
 
@@ -16,12 +16,12 @@
   }
 
   &--info {
-    background: var(--color-banner-info-bg);
-    color: var(--color-banner-info-fg);
+    background: clr(banner-info-bg);
+    color: clr(banner-info-fg);
   }
 
   &--warning {
-    background: var(--color-banner-warning-bg);
-    color: var(--color-banner-warning-fg);
+    background: clr(banner-warning-bg);
+    color: clr(banner-warning-fg);
   }
 }

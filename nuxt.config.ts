@@ -10,6 +10,9 @@ export default defineNuxtConfig({
 
   image: {
     quality: 80,
+    // The breakpoint names for `sizes` (e.g. "phone:100vw tablet:720px").
+    // Same as $breakpoints in app/assets/scss/abstracts/_variables.scss.
+    screens: { phone: 480, tablet: 768, desktop: 1024, max: 1800 },
   },
 
   // Fonts come only from files in app/assets/fonts/, never from an online
@@ -88,5 +91,10 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'en' },
       meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
     },
+  },
+
+  // Type-check the CMS config in cms/ (Node-side code, like modules/).
+  typescript: {
+    nodeTsConfig: { include: ['../cms/**/*'] },
   },
 })

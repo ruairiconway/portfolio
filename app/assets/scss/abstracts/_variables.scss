@@ -1,14 +1,58 @@
-// Compile-time design tokens. Runtime/theme colours live as CSS custom
-// properties in base/_root.scss so they can switch with dark mode.
-$max-width: 44rem;
-$gutter: 1rem;
+// Compile-time design tokens.
+$max-width: 112rem;
+
+// Colours. Use them with clr() (abstracts/_functions.scss):
+//   color: clr(fg);
+//   background: clr(accent, 0.2);   // 20% opacity
+// Each becomes a CSS custom property (--color-<name>, base/_root.scss), so
+// $colors-dark can switch it in dark mode.
+$colors: (
+  "bg": #ffffff,
+  "fg": #1a1a1a,
+  "muted": #666666,
+  "accent": #00dc82,
+  "black": #000000,
+  "white": #ffffff,
+  "banner-info-bg": #e6f0ff,
+  "banner-info-fg": #0b3d91,
+  "banner-warning-bg": #fff4d6,
+  "banner-warning-fg": #6b4a00,
+);
+
+// Dark mode values. Colours not listed here stay the same in dark mode.
+$colors-dark: (
+  // 'bg': #111111,
+  // 'fg': #eeeeee,
+  // 'muted': #999999,
+  // 'banner-info-bg': #102a54,
+  // 'banner-info-fg': #d6e6ff,
+  // 'banner-warning-bg': #3d2e00,
+   //  'banner-warning-fg': #ffe9a8,
+);
 
 // To use your own font, add its files to app/assets/fonts/ and put its name first:
 // $font-sans: 'BrandSans', system-ui, …  (see Fonts in the README)
-$font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+$font-sans:
+  system-ui,
+  -apple-system,
+  "Segoe UI",
+  Roboto,
+  sans-serif;
 
+// Breakpoints, mobile first: @include mq(tablet) { ... } applies from 768px up.
+// @nuxt/image uses the same names for <CmsImage sizes="phone:100vw tablet:720px">:
+// keep image.screens in nuxt.config.ts in sync.
 $breakpoints: (
-  sm: 640px,
-  md: 768px,
-  lg: 1024px,
+  phone: 480px,
+  tablet: 768px,
+  desktop: 1024px,
+  max: 1800px,
 );
+
+// Layout grid. Used by width() (abstracts/_functions.scss), the --grid-*
+// custom properties (base/_root.scss) and the dev overlay (partials/DevGrid).
+$grid-columns: 8; // columns from $grid-breakpoint up
+$grid-columns-mobile: 4; // columns below $grid-breakpoint
+$grid-breakpoint: tablet;
+$grid-gutter: 1rem; // space between columns
+$grid-outer-gutter: 1rem; // space at the left and right edges of the page

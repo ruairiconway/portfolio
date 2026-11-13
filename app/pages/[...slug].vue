@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// CMS fields: cms/pages/[...slug].yml
+// CMS fields: cms/pages/[...slug].ts
 import type { Block } from '#cms'
 
 const route = useRoute()

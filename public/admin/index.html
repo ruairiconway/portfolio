@@ -7,7 +7,10 @@
     <title>Content Manager</title>
   </head>
   <body>
-    <!-- Sveltia CMS reads ./config.yml automatically. -->
-    <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" type="module"></script>
+    <!-- Sveltia CMS reads ./config.yml automatically. Classic scripts (not
+         type="module"), so they run in order: Sveltia first, then the embeds. -->
+    <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+    <!-- Rich text embeds (generated from cms/ by modules/cms/embeds.ts). -->
+    <script src="./editor-components.js"></script>
   </body>
 </html>

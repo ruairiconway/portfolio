@@ -20,3 +20,4 @@ node_modules
 
 # Generated from cms/ by modules/cms/
 public/admin/config.yml
+public/admin/editor-components.js

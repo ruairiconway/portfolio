@@ -1,8 +1,8 @@
 <script setup lang="ts">
 /**
- * Renders the shared video field (cms/components/partials/CmsVideo.yml,
- * CmsVideoField from #cms). Use it in any block that includes
- * `- '@partials/CmsVideo'`:
+ * Renders the shared video field (cms/components/partials/CmsVideo.ts,
+ * CmsVideoField from #cms). Use it in any block that has that field in its
+ * fields (import video from '../partials/CmsVideo'):
  *
  *   <CmsVideo v-if="block.video?.url?.startsWith('https://')" :video="block.video" />
  *
@@ -14,7 +14,7 @@
  * links are converted to embeds; any other https URL is treated as an embed
  * URL from a video host (Mux, Cloudflare Stream, Bunny Stream…).
  */
-import type { CmsVideoField } from '#cms' // generated from cms/components/partials/CmsVideo.yml
+import type { CmsVideoField } from '#cms' // generated from cms/components/partials/CmsVideo.ts
 
 const props = defineProps<{ video: CmsVideoField }>()
 
@@ -48,7 +48,7 @@ const playing = ref(false)
         allowfullscreen
       />
       <button v-else type="button" class="video__play" :aria-label="`Play video: ${title}`" @click="playing = true">
-        <CmsImage v-if="video.poster" :image="video.poster" alt="" sizes="sm:100vw md:720px" class="video__poster" />
+        <CmsImage v-if="video.poster" :image="video.poster" alt="" sizes="phone:100vw tablet:720px" class="video__poster" />
         <img v-else-if="embed.thumbnail" :src="embed.thumbnail" alt="" loading="lazy" decoding="async" class="video__poster" />
         <span class="video__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="28" height="28"><path d="M8 5v14l11-7z" fill="currentColor" /></svg>

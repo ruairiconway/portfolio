@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// CMS fields: cms/components/SiteFooter.yml
+// CMS fields: cms/components/SiteFooter.ts
 const { data: site } = await useSiteSettings()
 const { data: nav } = await useAsyncData('footer-nav', () =>
   queryCollection('footerNav').first(),

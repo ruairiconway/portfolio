@@ -1,0 +1,35 @@
+// Styles for app/components/partials/CmsButton.vue (scoped).
+// Abstracts ($variables, @include mixins) are auto-injected.
+
+.cms-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.65em 1.25em;
+  border-radius: 999px;
+  background: clr(accent);
+  color: clr(black);
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: color-mix(in srgb, clr(accent) 85%, clr(black));
+  }
+
+  &:focus-visible {
+    outline: 3px solid clr(fg);
+    outline-offset: 2px;
+  }
+
+  // Read by screen readers only.
+  &__new-tab {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

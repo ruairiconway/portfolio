@@ -1,23 +1,32 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 :root {
-  --color-bg: #ffffff;
-  --color-fg: #1a1a1a;
-  --color-muted: #666666;
-  --color-accent: #00dc82;
-  --color-banner-info-bg: #e6f0ff;
-  --color-banner-info-fg: #0b3d91;
-  --color-banner-warning-bg: #fff4d6;
-  --color-banner-warning-fg: #6b4a00;
+  // Colours ($colors in abstracts/_variables.scss). Use them with clr().
+  @each $name, $value in $colors {
+    --color-#{$name}: #{$value};
+  }
   color-scheme: light dark;
 
+  // Layout grid (settings in abstracts/_variables.scss). --grid-column is the
+  // width of one column; width() in abstracts/_functions.scss builds on it.
+  --grid-columns: #{$grid-columns-mobile};
+  --grid-gutter: #{$grid-gutter};
+  --grid-outer-gutter: #{$grid-outer-gutter};
+  --grid-column: calc(
+    (
+        100svw - 2 * var(--grid-outer-gutter) - (var(--grid-columns) - 1) *
+          var(--grid-gutter)
+      ) /
+      var(--grid-columns)
+  );
+
+  @include mq($grid-breakpoint) {
+    --grid-columns: #{$grid-columns};
+  }
+
   @include dark {
-    --color-bg: #111111;
-    --color-fg: #eeeeee;
-    --color-muted: #999999;
-    --color-banner-info-bg: #102a54;
-    --color-banner-info-fg: #d6e6ff;
-    --color-banner-warning-bg: #3d2e00;
-    --color-banner-warning-fg: #ffe9a8;
+    @each $name, $value in $colors-dark {
+      --color-#{$name}: #{$value};
+    }
   }
 }

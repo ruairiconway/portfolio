@@ -8,7 +8,7 @@
     position: relative;
     overflow: hidden;
     border-radius: 0.5rem;
-    background: #000;
+    background: clr(black);
 
     iframe {
       position: absolute;
@@ -28,7 +28,7 @@
     padding: 0;
     border: 0;
     background: none;
-    color: #fff;
+    color: clr(white);
     cursor: pointer;
 
     &:hover .video__icon,
@@ -37,7 +37,7 @@
     }
 
     &:focus-visible {
-      outline: 3px solid var(--color-accent);
+      outline: 3px solid clr(accent);
       outline-offset: -3px;
     }
   }
@@ -58,13 +58,13 @@
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
-    background: rgb(0 0 0 / 60%);
+    background: clr(black, 0.6);
     transition: transform 0.15s ease;
   }
 
   figcaption {
     margin-top: 0.5rem;
-    color: var(--color-muted);
+    color: clr(muted);
     font-size: 0.875rem;
   }
 }
