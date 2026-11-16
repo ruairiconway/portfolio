@@ -26,7 +26,7 @@ export default defineCms({
           widget: 'image',
           required: false,
           accept: 'image/svg+xml,image/png,image/x-icon,image/vnd.microsoft.icon',
-          hint: 'Browser tab icon. A square SVG, or a PNG of at least 512 × 512 px.',
+          hint: 'Browser tab icon. A square SVG, or a PNG of at least 512 x 512 px.',
         },
       ],
     },

@@ -47,8 +47,14 @@ export type CmsField = StandardField extends infer F ? (F extends unknown ? Stri
 type CmsBlockType = Strict<VariableFieldType>
 type CmsFile = Strict<CollectionFile>
 
-/** An item that's merged with others of the same `name`, so every other option is optional. */
-type Named<T> = T extends unknown ? Partial<Strict<T>> & { name: string } : never
+/**
+ * An item that's merged with others of the same `name`, so every other option
+ * is optional. A file collection's `files` are merged by name too, so they can
+ * be listed by name alone (e.g. in cms/config.ts, to set their order).
+ */
+type Named<T> = T extends unknown
+  ? Partial<Omit<Strict<T>, 'files'>> & { name: string } & ('files' extends keyof T ? { files?: Named<CollectionFile>[] } : unknown)
+  : never
 
 /**
  * A piece of the Sveltia config. The pieces are deep-merged (cms/config.ts

@@ -49,11 +49,13 @@ export default defineCms({
   collections: [
     { name: "pages" }, // cms/pages/[...slug].ts
     {
-      // files from cms/components/{AlertBanner,SiteHeader,SiteFooter}.ts
+      // files from cms/components/{AlertBanner,Header,Footer}.ts
       name: "navigation",
       label: "Navigation",
       icon: "menu",
       editor: { preview: false },
+      // Sets the order. Each file's fields come from its cms/components/ file.
+      files: [{ name: "header" }, { name: "footer" }, { name: "alert-banner" }],
     },
   ],
 

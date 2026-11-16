@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// CMS fields: cms/components/SiteFooter.ts
+// CMS fields: cms/components/Footer.ts
 const { data: site } = await useSiteSettings()
 const { data: nav } = await useAsyncData('footer-nav', () =>
   queryCollection('footerNav').first(),
@@ -7,7 +7,7 @@ const { data: nav } = await useAsyncData('footer-nav', () =>
 </script>
 
 <template>
-  <footer class="site-footer">
+  <footer class="footer">
     <nav v-if="nav?.items.length" aria-label="Footer">
       <NuxtLink v-for="item in nav.items" :key="item.url" :to="item.url">
         {{ item.label }}
@@ -17,4 +17,4 @@ const { data: nav } = await useAsyncData('footer-nav', () =>
   </footer>
 </template>
 
-<style lang="scss" scoped src="../assets/scss/components/SiteFooter.scss"></style>
+<style lang="scss" scoped src="../assets/scss/components/Footer.scss"></style>

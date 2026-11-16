@@ -12,7 +12,7 @@
  *   cms/config.ts                        base config + sidebar order  (nuxt.config.ts)
  *   cms/app.ts                           singletons                   (app/app.vue)
  *   cms/pages/[...slug].ts               collection                   (app/pages/[...slug].vue)
- *   cms/components/SiteHeader.ts         navigation file              (app/components/SiteHeader.vue)
+ *   cms/components/Header.ts             navigation file              (app/components/Header.vue)
  *   cms/components/blocks/Quote.ts       page block                   (app/components/blocks/Quote.vue)
  *   cms/components/partials/CmsVideo.ts  shared field + component     (app/components/partials/CmsVideo.vue)
  *   cms/fields/seo.ts                    shared field                 (used by several collections)

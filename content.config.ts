@@ -28,13 +28,13 @@ export default defineContentConfig({
     headerNav: defineCollection({
       type: 'data',
       source: 'navigation/header.json',
-      schema: cmsSchema({ collection: 'navigation', file: 'header' }), // cms/components/SiteHeader.ts
+      schema: cmsSchema({ collection: 'navigation', file: 'header' }), // cms/components/Header.ts
     }),
 
     footerNav: defineCollection({
       type: 'data',
       source: 'navigation/footer.json',
-      schema: cmsSchema({ collection: 'navigation', file: 'footer' }), // cms/components/SiteFooter.ts
+      schema: cmsSchema({ collection: 'navigation', file: 'footer' }), // cms/components/Footer.ts
     }),
 
     // Global settings. Each file is a singleton in the CMS (cms/app.ts).

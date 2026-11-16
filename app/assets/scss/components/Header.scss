@@ -1,7 +1,7 @@
-// Styles for app/components/SiteHeader.vue (scoped).
+// Styles for app/components/Header.vue (scoped).
 // Abstracts ($variables, @include mixins) are auto-injected.
 
-.site-header {
+.header {
   display: flex;
   flex-wrap: wrap;
   gap: $grid-gutter;

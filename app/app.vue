@@ -80,13 +80,13 @@ const isDev = import.meta.dev;
   <VueLenis root :options="lenisOptions" />
   <AlertBanner />
   <div class="layout">
-    <SiteHeader />
+    <Header />
     <main>
       <NuxtPage
         :transition="pageTransition"
       /><!-- app/utils/pageTransition.ts -->
     </main>
-    <SiteFooter />
+    <Footer />
   </div>
   <DevGrid v-if="isDev" />
 </template>

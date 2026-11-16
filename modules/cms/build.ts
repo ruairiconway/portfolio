@@ -160,6 +160,15 @@ function checkComplete(config: Obj): void {
           `"${item.name}" is listed in ${SOURCE_DIR}/config.ts ${key} but no file in ${SOURCE_DIR}/ defines its fields`,
         )
       }
+      if (isNamed(item) && Array.isArray(item.files)) {
+        for (const file of item.files) {
+          if (isNamed(file) && !file.fields) {
+            throw new Error(
+              `"${file.name}" is listed in the "${item.name}" collection's files but no file in ${SOURCE_DIR}/ defines its fields`,
+            )
+          }
+        }
+      }
     }
   }
 }

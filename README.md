@@ -28,7 +28,7 @@ The CMS config (`cms/`) and the styles (`app/assets/scss/`) mirror `app/`. Anyth
 |---|---|---|---|
 | Layout shell | `cms/app.ts` | `app/app.vue` | `app/assets/scss/app.scss` |
 | Pages | `cms/pages/[...slug].ts` | `app/pages/[...slug].vue` | – |
-| Header | `cms/components/SiteHeader.ts` | `app/components/SiteHeader.vue` | `app/assets/scss/components/SiteHeader.scss` |
+| Header | `cms/components/Header.ts` | `app/components/Header.vue` | `app/assets/scss/components/Header.scss` |
 | A page block, e.g. Quote | `cms/components/blocks/Quote.ts` | `app/components/blocks/Quote.vue` | `app/assets/scss/components/blocks/Quote.scss` |
 | A partial, e.g. CmsVideo | `cms/components/partials/CmsVideo.ts` | `app/components/partials/CmsVideo.vue` | `app/assets/scss/components/partials/CmsVideo.scss` |
 
@@ -44,7 +44,7 @@ cms/                      # Sveltia CMS config, split to mirror app/
 app/
   app.vue                 # layout shell, favicon, global SEO defaults
   components/
-    AlertBanner.vue, SiteHeader.vue, SiteFooter.vue
+    AlertBanner.vue, Header.vue, Footer.vue
     partials/             # reusable pieces, used by name (<CmsImage>, no prefix)
       BlockRenderer.vue   # renders a page's blocks
       CmsImage.vue        # renders any CMS image field (sizes, dimensions, lazy loading)
@@ -105,7 +105,7 @@ export default defineBlock({
 
 | Helper | Used in | Defines |
 |---|---|---|
-| `defineCms()` | `config.ts`, `app.ts`, `pages/…`, `components/SiteHeader.ts`… | a piece of the Sveltia config |
+| `defineCms()` | `config.ts`, `app.ts`, `pages/…`, `components/Header.ts`… | a piece of the Sveltia config |
 | `defineBlock()` | `components/blocks/<Name>.ts` | a page block |
 | `defineField()` | `fields/<name>.ts`, `components/partials/<Name>.ts` | a shared field |
 | `blocks` | a list field's `types` | every page block |
