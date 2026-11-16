@@ -49,6 +49,20 @@ const toKebab = (value: string) => value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').
 export const isParsedMarkdown = (field: Obj) =>
   field.widget === 'markdown' || (field.widget === 'richtext' && field.format !== 'html')
 
+// Field options read by modules/cms only (see BuildOnlyFieldOptions in ./define.ts).
+const BUILD_ONLY_OPTIONS = ['renamedFrom']
+
+/** A copy without the build-only options, for what's handed to Sveltia. */
+export function withoutBuildOnly<T>(value: T): T {
+  if (Array.isArray(value)) return value.map(withoutBuildOnly) as T
+  if (!isObject(value)) return value
+  const result: Obj = {}
+  for (const [key, child] of Object.entries(value)) {
+    if (!BUILD_ONLY_OPTIONS.includes(key)) result[key] = withoutBuildOnly(child)
+  }
+  return result as T
+}
+
 /** "components/blocks/PullQuote.ts" -> "PullQuote" */
 export const fileStem = (file: string) => basename(file).replace(/\.ts$/, '')
 

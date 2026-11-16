@@ -15,6 +15,7 @@
     "preview": "nuxt preview",
     "typecheck": "nuxt typecheck",
     "new": "node scripts/new.mjs",
+    "cms:sync": "node scripts/cms-sync.mjs",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {

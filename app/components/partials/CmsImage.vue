@@ -1,3 +1,32 @@
+<template>
+  <template v-if="image?.src">
+    <img
+      v-if="isSvg"
+      :class="classes"
+      :src="image.src"
+      :alt="alt"
+      :width="image.width"
+      :height="image.height"
+      :loading="loading"
+      :fetchpriority="fetchpriority"
+      decoding="async"
+    />
+    <NuxtImg
+      v-else
+      :class="classes"
+      :src="image.src"
+      :alt="alt"
+      :width="image.width"
+      :height="image.height"
+      :sizes="sizes"
+      format="webp"
+      :loading="loading"
+      :fetchpriority="fetchpriority"
+      decoding="async"
+    />
+  </template>
+</template>
+
 <script setup lang="ts">
 /**
  * Renders a CMS image field (CmsImage from #cms). Dimensions are read at build
@@ -44,34 +73,5 @@ const loading = computed(() => (props.priority ? 'eager' : 'lazy'))
 const fetchpriority = computed(() => (props.priority ? 'high' : undefined))
 const classes = computed(() => ['cms-image', props.fit && `cms-image--${props.fit}`])
 </script>
-
-<template>
-  <template v-if="image?.src">
-    <img
-      v-if="isSvg"
-      :class="classes"
-      :src="image.src"
-      :alt="alt"
-      :width="image.width"
-      :height="image.height"
-      :loading="loading"
-      :fetchpriority="fetchpriority"
-      decoding="async"
-    />
-    <NuxtImg
-      v-else
-      :class="classes"
-      :src="image.src"
-      :alt="alt"
-      :width="image.width"
-      :height="image.height"
-      :sizes="sizes"
-      format="webp"
-      :loading="loading"
-      :fetchpriority="fetchpriority"
-      decoding="async"
-    />
-  </template>
-</template>
 
 <style lang="scss" scoped src="../../assets/scss/components/partials/CmsImage.scss"></style>

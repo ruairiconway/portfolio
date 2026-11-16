@@ -1,3 +1,4 @@
+@use 'sass:list';
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:meta';
@@ -75,4 +76,53 @@
     @error 'width(): $#{$name} must be a number of 0 or more, without units. Got #{meta.inspect($value)}.';
   }
   @return $value;
+}
+
+// A size that scales with the screen width, between a mobile and a desktop value:
+//
+//   font-size: fluid(4rem, 2.5rem);
+//   padding-inline: fluid(5svw, 1rem);   // units can differ
+//   line-height: fluid(1.1, 1.3);        // unitless works too
+//   width: fluid(width(6, 5), width(4, 3));  // and so do calc()s, like width()
+//
+// $desktop: the value at the desktop breakpoint ($breakpoints) and wider.
+// $mobile:  the value at the phone breakpoint and narrower.
+// In between, it moves in a straight line from one to the other.
+//
+// Any units work, even mixed ones (px, rem, %, svw…): the position between the
+// two breakpoints is worked out in the browser as a number from 0 to 1, using
+// tan(atan2(a, b)) = a / b, the only way CSS can divide two lengths into a
+// plain number. Supported in every browser since 2023.
+@function fluid($desktop, $mobile) {
+  @each $name, $value in (desktop: $desktop, mobile: $mobile) {
+    @if not list.index(('number', 'calculation'), meta.type-of($value)) {
+      @error 'fluid(): $#{$name} must be a size, like 2rem, 24px, 5svw or width(3, 2). Got #{meta.inspect($value)}.';
+    }
+  }
+  // A bare 0 takes the other value's unit, as CSS can't do 2rem - 0.
+  @if _is-bare-zero($mobile) {
+    $mobile: _zero-like($desktop);
+  }
+  @if _is-bare-zero($desktop) {
+    $desktop: _zero-like($mobile);
+  }
+
+  $from: map.get($breakpoints, phone);
+  $to: map.get($breakpoints, desktop);
+  // 0 at the phone breakpoint and narrower, 1 at the desktop breakpoint and wider.
+  $progress: clamp(0, tan(atan2(100vw - $from, $to - $from)), 1);
+
+  @return calc($mobile + ($desktop - $mobile) * $progress);
+}
+
+// 0 in the same unit as $value, or 0px for a calc() (whose unit Sass can't know).
+@function _zero-like($value) {
+  @if meta.type-of($value) == 'number' {
+    @return $value * 0;
+  }
+  @return 0px;
+}
+
+@function _is-bare-zero($value) {
+  @return meta.type-of($value) == 'number' and $value == 0 and math.is-unitless($value);
 }

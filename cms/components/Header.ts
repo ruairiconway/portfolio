@@ -1,7 +1,7 @@
 // Mirrors app/components/Header.vue.
 // (The logo comes from Site settings in cms/app.ts.)
 import { defineCms } from "../../modules/cms/define";
-import cmsLink from "./partials/CmsLink";
+import { buttonFields } from "./partials/CmsButton";
 
 export default defineCms({
   collections: [
@@ -19,8 +19,8 @@ export default defineCms({
               name: "items",
               label: "Links",
               widget: "list",
-              summary: "{{label}} → {{url}}",
-              fields: [cmsLink],
+              summary: "{{text}}",
+              fields: [...buttonFields],
             },
           ],
         },

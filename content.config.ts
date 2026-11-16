@@ -6,15 +6,15 @@ import { cmsSchema } from './modules/cms/schema'
 // Only where the content lives (`source`) and how it's routed are set here.
 //
 // `type: 'page'` collections omit fields Nuxt Content provides itself:
-// `path` (the page URL, read from frontmatter) and `body` (the Markdown body).
+// `path` (the page URL, read from the file) and, for Markdown files, `body`.
 
 export default defineContentConfig({
   collections: {
-    // content/pages/*.md -> the `path` set in each file's frontmatter (URL path field in the CMS).
-    // Without one, the URL falls back to the filename (index.md -> /, about.md -> /about).
+    // content/pages/*.json -> the `path` set in each file (URL path field in the CMS).
+    // Without one, the URL falls back to the filename (index.json -> /, about.json -> /about).
     pages: defineCollection({
       type: 'page',
-      source: { include: 'pages/**/*.md', prefix: '/' },
+      source: { include: 'pages/**/*.json', prefix: '/' },
       schema: cmsSchema({ collection: 'pages' }, { omit: ['path'] }), // cms/pages/[...slug].ts
     }),
 

@@ -1,3 +1,18 @@
+<template>
+  <VueLenis root :options="lenisOptions" />
+  <AlertBanner />
+  <div class="layout">
+    <Header />
+    <main>
+      <NuxtPage
+        :transition="pageTransition"
+      /><!-- app/utils/pageTransition.ts -->
+    </main>
+    <Footer />
+  </div>
+  <DevGrid v-if="isDev" />
+</template>
+
 <script setup lang="ts">
 // CMS fields: cms/app.ts
 // Styles: assets/scss/app.scss (loaded globally from nuxt.config.ts)
@@ -75,18 +90,3 @@ const lenisOptions = {
 // Dev-only column overlay, toggled with the | key (see partials/DevGrid.vue).
 const isDev = import.meta.dev;
 </script>
-
-<template>
-  <VueLenis root :options="lenisOptions" />
-  <AlertBanner />
-  <div class="layout">
-    <Header />
-    <main>
-      <NuxtPage
-        :transition="pageTransition"
-      /><!-- app/utils/pageTransition.ts -->
-    </main>
-    <Footer />
-  </div>
-  <DevGrid v-if="isDev" />
-</template>

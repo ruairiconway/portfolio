@@ -54,7 +54,7 @@ app/
   composables/            # usePageSeo, useSiteSettings
   error.vue               # 404 / error page
   pages/
-    [...slug].vue         # block-based pages from content/pages/*.md
+    [...slug].vue         # block-based pages from content/pages/*.json
   assets/scss/
     abstracts/            # variables, mixins, functions (no CSS output); auto-injected
     base/                 # :root tokens, reset
@@ -120,7 +120,7 @@ export default defineBlock({
 
 ### Page URLs
 
-Each page has a **URL path** field in the CMS, e.g. `/about`, `/services/design`, or `/` for the home page. It's saved as `path` in the page's frontmatter, and Nuxt Content uses it as the page's URL.
+Each page has a **URL path** field in the CMS, e.g. `/about`, `/services/design`, or `/` for the home page. It's saved as `path` in the page's JSON file, and Nuxt Content uses it as the page's URL.
 
 - The URL comes from the field, not the filename. Sveltia's sidebar Slug panel is turned off, and filenames are only set (from the title) when a page is created.
 - The CMS rejects paths that aren't lowercase letters, numbers and hyphens starting with `/`, and paths already used by another page.
@@ -128,7 +128,7 @@ Each page has a **URL path** field in the CMS, e.g. `/about`, `/services/design`
 
 ### Page SEO
 
-Pages have a collapsible **SEO** section in the CMS. It's defined once, in `cms/fields/seo.ts`, and saved under `seo:` in each entry's frontmatter. It has:
+Pages have a collapsible **SEO** section in the CMS. It's defined once, in `cms/fields/seo.ts`, and saved as `seo` in each page's JSON file. It has:
 
 - **Meta title:** replaces the entry's title in search results and link previews, but not on the page itself. The site name is still added after it.
 - **The global SEO fields:** title separator, meta description, social image, X/Twitter handle and "Hide from search engines".
@@ -188,6 +188,23 @@ On `type: 'page'` collections, `omit` drops fields Nuxt Content provides itself:
 - While `pnpm dev` is running, saving a change in `cms/` restarts the dev server to pick it up. A file with an error is reported in the terminal instead, and the server keeps running.
 - If you rename or remove a field, `pnpm typecheck` flags every component still using the old name.
 
+### Content always matches cms/
+
+The fields in `cms/` are the only source of truth: every file in `content/` is made to match them exactly (`modules/cms/content.ts`). Nothing else is kept. Git history is the only record of removed values.
+
+- **Values that aren't fields are removed.** That includes fields you've deleted or renamed, and items of a block or link type that no longer exists.
+- **Values of the wrong type are replaced:** text where the field is now an object, a number in a text field, an option no longer in a select. The replacement is the field's default, or an empty value of the right type (`''`, `false`, `{}`). If the field is optional, the value is removed.
+- **Missing required fields are filled in** the same way, so the CMS shows what needs a value. Only a required image, file, relation, number or select with no `default` can't be filled in. It's listed with ✖ to set in the CMS.
+- **Renaming a field:** add `renamedFrom: 'oldName'` to it and the value moves across. Remove `renamedFrom` once the content is synced.
+- **Keys are saved in field order**, as the CMS saves them. Formatting alone (indentation, quoting) never counts as a difference.
+
+When it runs:
+
+- **`pnpm dev`** syncs automatically: on start, after every change to `cms/` (which restarts Nuxt), and whenever a file in `content/` changes. It logs every change. Commit the synced files along with the `cms/` change.
+- **`pnpm generate`** fails if any file doesn't match, so a mismatch never reaches the live site. It doesn't fix files itself, because files changed during the Netlify build never get back to the repo.
+- **`pnpm cms:sync`** syncs without starting the dev server. `pnpm cms:sync --check` only lists the differences.
+- **`pnpm typecheck`** and `nuxt prepare` list differences without writing anything.
+
 ### Scaffolding: `pnpm new block`
 
 `pnpm new block Quote` creates a block's three files at mirrored paths:
@@ -208,7 +225,7 @@ Add `--dry-run` to list the files without writing them. Existing files are never
 
 `Example` is an empty placeholder block: Sveltia won't load a list with no block types, so keep it until you've added a real block, then delete its three files.
 
-The block then appears in the CMS block picker, under each page's **Page content** list, and `<BlockRenderer>` renders it on any page that uses it. Nothing needs registering. A page's blocks are saved as `blocks` in its frontmatter.
+The block then appears in the CMS block picker, under each page's **Page content** list, and `<BlockRenderer>` renders it on any page that uses it. Nothing needs registering. A page's blocks are saved as `blocks` in its JSON file.
 
 **Anchor IDs.** Every block automatically gets an optional **Anchor ID** field (`cms/fields/anchorId.ts`, typed `anchorId?: string`). `<BlockRenderer>` sets it as the `id` of the block's root element, so `/about#team` scrolls to that block, and a button's **Anchor** can point at it. Give each block a single root element (like the `<section>` that `pnpm new block` creates) so the `id` has somewhere to go. To add other fields to every block, list their files in `BLOCK_FIELDS` in `modules/cms/build.ts`.
 
@@ -232,6 +249,13 @@ The block then appears in the CMS block picker, under each page's **Page content
   background: clr(black, 0.6);
   ```
   Each colour becomes a CSS custom property (`--color-fg`), so dark mode switches it in the browser, and `clr()` returns that property. With an opacity, it uses `color-mix()`, so see-through colours switch in dark mode too. An unknown colour name fails the build and lists the valid ones.
+
+**Fluid sizes.** `fluid($desktop, $mobile)` scales a value with the screen width. At the `desktop` breakpoint (1024px) and wider it's `$desktop`, at the `phone` breakpoint (480px) and narrower it's `$mobile`, and in between it moves in a straight line. Any units work, even mixed ones, and it works for any property:
+  ```scss
+  font-size: fluid(4rem, 2.5rem);
+  padding-inline: fluid(5svw, 1rem);
+  line-height: fluid(1.1, 1.3);
+  ```
 
 **Layout grid.** The grid's settings are in `abstracts/_variables.scss`: `$grid-columns` (8), `$grid-columns-mobile` (4, below `$grid-breakpoint`), `$grid-gutter` and `$grid-outer-gutter`. Breakpoints are `phone` (480px), `tablet` (768px), `desktop` (1024px) and `max` (1800px), in `$breakpoints`. `@nuxt/image` uses the same names in `sizes` (`image.screens` in `nuxt.config.ts`). Size things to the grid with `width($columns, $grid-gutters, $outer-gutters: 0)`:
 
@@ -261,6 +285,10 @@ The block then appears in the CMS block picker, under each page's **Page content
 [anime.js](https://animejs.com) v4 handles animation inside components. The auto-imported `useAnime()` composable (`app/composables/useAnime.ts`) gives each component its own anime.js scope:
 
 ```vue
+<template>
+  <div ref="root">…</div>
+</template>
+
 <script setup lang="ts">
 import { animate, stagger } from 'animejs'
 
@@ -273,10 +301,6 @@ const scope = useAnime(root, (scope) => {
   scope.add('pulse', () => animate('.card', { scale: [1, 1.05, 1] }))
 })
 </script>
-
-<template>
-  <div ref="root">…</div>
-</template>
 ```
 
 - **Scoped:** selectors only match inside the component's root element, so `.card` won't hit another component's cards.

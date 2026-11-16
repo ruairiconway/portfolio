@@ -32,12 +32,9 @@ $colors-dark: (
 
 // To use your own font, add its files to app/assets/fonts/ and put its name first:
 // $font-sans: 'BrandSans', system-ui, …  (see Fonts in the README)
-$font-sans:
-  system-ui,
-  -apple-system,
-  "Segoe UI",
-  Roboto,
-  sans-serif;
+$redaction-50: "Redaction50", serif;
+$redaction-35: "Redaction35", serif;
+$font-body: sans-serif;
 
 // Breakpoints, mobile first: @include mq(tablet) { ... } applies from 768px up.
 // @nuxt/image uses the same names for <CmsImage sizes="phone:100vw tablet:720px">:

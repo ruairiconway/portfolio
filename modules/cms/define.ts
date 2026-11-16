@@ -42,8 +42,17 @@ type Strict<T> = {
           : T[K]
 }
 
+/** Options read by modules/cms only, removed from the Sveltia config. */
+interface BuildOnlyFieldOptions {
+  /**
+   * The field's old name(s). `pnpm cms:sync` moves values saved under an old
+   * name to this one. Remove it once the content has been synced.
+   */
+  renamedFrom?: string | string[]
+}
+
 /** A field with one of Sveltia's built-in widgets. */
-export type CmsField = StandardField extends infer F ? (F extends unknown ? Strict<F> : never) : never
+export type CmsField = StandardField extends infer F ? (F extends unknown ? Strict<F> & BuildOnlyFieldOptions : never) : never
 type CmsBlockType = Strict<VariableFieldType>
 type CmsFile = Strict<CollectionFile>
 

@@ -1,3 +1,15 @@
+<template>
+  <!-- Each block's Anchor ID (cms/fields/anchorId.ts) becomes the id of its root
+       element, so /page#pricing scrolls to it. -->
+  <component
+    :is="item.component"
+    v-for="(item, index) in items"
+    :id="item.block.anchorId || undefined"
+    :key="index"
+    :block="item.block"
+  />
+</template>
+
 <script setup lang="ts">
 /**
  * Renders a list of CMS blocks. A block of type "pull-quote" renders
@@ -23,15 +35,3 @@ const items = props.blocks.flatMap((block) => {
   return [{ block, component }]
 })
 </script>
-
-<template>
-  <!-- Each block's Anchor ID (cms/fields/anchorId.ts) becomes the id of its root
-       element, so /page#pricing scrolls to it. -->
-  <component
-    :is="item.component"
-    v-for="(item, index) in items"
-    :id="item.block.anchorId || undefined"
-    :key="index"
-    :block="item.block"
-  />
-</template>

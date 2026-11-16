@@ -9,8 +9,8 @@ export default defineCms({
       label: 'Pages',
       label_singular: 'Page',
       folder: 'content/pages',
-      extension: 'md',
-      format: 'frontmatter',
+      extension: 'json',
+      format: 'json',
       create: true,
       // The URL comes from the `path` field below, not the filename, so the
       // sidebar Slug panel is turned off. Filenames are set from the title once.

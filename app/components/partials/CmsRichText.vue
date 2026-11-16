@@ -1,3 +1,9 @@
+<template>
+  <!-- MDCRenderer's own root element is the wrapper, so the text's elements are
+       its direct children (the spacing styles rely on that). -->
+  <MDCRenderer v-if="hasContent && body" :body="body" :tag="tag" :components="embedComponents" class="cms-rich-text" />
+</template>
+
 <script setup lang="ts">
 /**
  * Renders a rich text field (cms/components/partials/CmsRichText.ts,
@@ -29,11 +35,5 @@ const props = withDefaults(
 
 const hasContent = computed(() => (props.body?.children?.length ?? 0) > 0)
 </script>
-
-<template>
-  <!-- MDCRenderer's own root element is the wrapper, so the text's elements are
-       its direct children (the spacing styles rely on that). -->
-  <MDCRenderer v-if="hasContent && body" :body="body" :tag="tag" :components="embedComponents" class="cms-rich-text" />
-</template>
 
 <style lang="scss" scoped src="../../assets/scss/components/partials/CmsRichText.scss"></style>

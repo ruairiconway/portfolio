@@ -1,10 +1,3 @@
-<script setup lang="ts">
-// CMS fields: cms/components/AlertBanner.ts
-const { data: banner } = await useAsyncData('alert-banner', () =>
-  queryCollection('alertBanner').first(),
-)
-</script>
-
 <template>
   <div
     v-if="banner?.enabled && banner.message"
@@ -21,5 +14,12 @@ const { data: banner } = await useAsyncData('alert-banner', () =>
     </p>
   </div>
 </template>
+
+<script setup lang="ts">
+// CMS fields: cms/components/AlertBanner.ts
+const { data: banner } = await useAsyncData('alert-banner', () =>
+  queryCollection('alertBanner').first(),
+)
+</script>
 
 <style lang="scss" scoped src="../assets/scss/components/AlertBanner.scss"></style>

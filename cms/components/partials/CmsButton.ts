@@ -10,30 +10,30 @@
 //
 // It's also a rich text embed (the `embed` export below): editors can insert a
 // button into rich text (Insert → Button).
-import { defineEmbed, defineField } from '../../../modules/cms/define'
-import { linkFields } from './CmsLink'
+import { defineEmbed, defineField } from "../../../modules/cms/define";
+import { linkFields } from "./CmsLink";
 
 // The button's fields, named after CmsButton's props.
-const fields = [
-  defineField({ name: 'text', label: 'Button text', widget: 'string' }),
+export const buttonFields = [
+  defineField({ name: "text", label: "Button text", widget: "string" }),
   ...linkFields, // link + newWindow: cms/components/partials/CmsLink.ts
-]
+];
 
 const button = defineField({
-  name: 'button',
-  label: 'Button',
-  widget: 'object',
-  required: false,
-  summary: '{{text}}',
-  fields,
-})
+  name: "button",
+  label: "Button",
+  widget: "object",
+  // required: false,
+  summary: "{{text}}",
+  fields: [...buttonFields],
+});
 
-export default button
+export default button;
 
 export const embed = defineEmbed({
-  label: 'Button',
-  icon: 'smart_button',
-  mode: 'dialog',
-  summary: '{{text}}',
-  fields,
-})
+  label: "Button",
+  icon: "smart_button",
+  mode: "dialog",
+  summary: "{{text}}",
+  fields: [...buttonFields],
+});

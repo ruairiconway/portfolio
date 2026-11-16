@@ -1,6 +1,6 @@
 // Mirrors app/components/Footer.vue.
 import { defineCms } from "../../modules/cms/define";
-import cmsLink from "./partials/CmsLink";
+import { buttonFields } from "./partials/CmsButton";
 
 export default defineCms({
   collections: [
@@ -18,8 +18,8 @@ export default defineCms({
               name: "items",
               label: "Links",
               widget: "list",
-              summary: "{{label}} → {{url}}",
-              fields: [cmsLink],
+              summary: "{{label}}",
+              fields: [...buttonFields],
             },
           ],
         },

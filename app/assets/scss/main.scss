@@ -8,3 +8,7 @@
 
 @use 'base/root';
 @use 'base/global';
+@use 'abstracts/typography';
+
+// Global type rules (abstracts/_typography.scss).
+@include typography.global-typography;

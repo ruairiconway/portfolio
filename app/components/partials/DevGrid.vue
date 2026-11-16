@@ -1,3 +1,11 @@
+<template>
+  <div v-show="visible" class="dev-grid" aria-hidden="true">
+    <div class="dev-grid__inner">
+      <span v-for="n in MAX_COLUMNS" :key="n" class="dev-grid__col" />
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 // Column overlay for checking layout against the grid. Dev mode only
 // (rendered from app.vue behind import.meta.dev). Toggle with the | key.
@@ -28,13 +36,5 @@ onMounted(() => {
 
 onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 </script>
-
-<template>
-  <div v-show="visible" class="dev-grid" aria-hidden="true">
-    <div class="dev-grid__inner">
-      <span v-for="n in MAX_COLUMNS" :key="n" class="dev-grid__col" />
-    </div>
-  </div>
-</template>
 
 <style lang="scss" scoped src="../../assets/scss/components/partials/DevGrid.scss"></style>

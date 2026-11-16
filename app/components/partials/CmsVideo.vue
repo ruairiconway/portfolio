@@ -1,3 +1,25 @@
+<template>
+  <figure v-if="embed" class="video">
+    <div class="video__frame" :style="{ aspectRatio: video.aspectRatio ?? '16/9' }">
+      <iframe
+        v-if="playing"
+        :src="embed.src"
+        :title="title"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        allowfullscreen
+      />
+      <button v-else type="button" class="video__play" :aria-label="`Play video: ${title}`" @click="playing = true">
+        <CmsImage v-if="video.poster" :image="video.poster" alt="" sizes="phone:100vw tablet:720px" class="video__poster" />
+        <img v-else-if="embed.thumbnail" :src="embed.thumbnail" alt="" loading="lazy" decoding="async" class="video__poster" />
+        <span class="video__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="28" height="28"><path d="M8 5v14l11-7z" fill="currentColor" /></svg>
+        </span>
+      </button>
+    </div>
+    <figcaption v-if="video.caption">{{ video.caption }}</figcaption>
+  </figure>
+</template>
+
 <script setup lang="ts">
 /**
  * Renders the shared video field (cms/components/partials/CmsVideo.ts,
@@ -36,27 +58,5 @@ const embed = computed(() => {
 const title = computed(() => props.video.title || 'Video')
 const playing = ref(false)
 </script>
-
-<template>
-  <figure v-if="embed" class="video">
-    <div class="video__frame" :style="{ aspectRatio: video.aspectRatio ?? '16/9' }">
-      <iframe
-        v-if="playing"
-        :src="embed.src"
-        :title="title"
-        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-        allowfullscreen
-      />
-      <button v-else type="button" class="video__play" :aria-label="`Play video: ${title}`" @click="playing = true">
-        <CmsImage v-if="video.poster" :image="video.poster" alt="" sizes="phone:100vw tablet:720px" class="video__poster" />
-        <img v-else-if="embed.thumbnail" :src="embed.thumbnail" alt="" loading="lazy" decoding="async" class="video__poster" />
-        <span class="video__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="28" height="28"><path d="M8 5v14l11-7z" fill="currentColor" /></svg>
-        </span>
-      </button>
-    </div>
-    <figcaption v-if="video.caption">{{ video.caption }}</figcaption>
-  </figure>
-</template>
 
 <style lang="scss" scoped src="../../assets/scss/components/partials/CmsVideo.scss"></style>

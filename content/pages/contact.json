@@ -1,0 +1,11 @@
+{
+  "title": "Contact",
+  "path": "/contact",
+  "blocks": [
+    {
+      "type": "example",
+      "body": "Contact Page",
+      "anchorId": ""
+    }
+  ]
+}

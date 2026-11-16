@@ -1,3 +1,15 @@
+<template>
+  <NuxtLink
+    v-if="text && href"
+    :to="href"
+    :target="newWindow ? '_blank' : undefined"
+    :rel="newWindow ? 'noopener noreferrer' : undefined"
+    class="cms-button"
+  >
+    {{ text }}<span v-if="newWindow" class="cms-button__new-tab">(opens in a new tab)</span>
+  </NuxtLink>
+</template>
+
 <script setup lang="ts">
 /**
  * Renders the button field (cms/components/partials/CmsButton.ts,
@@ -33,17 +45,5 @@ const href = computed(() => {
   return undefined
 })
 </script>
-
-<template>
-  <NuxtLink
-    v-if="text && href"
-    :to="href"
-    :target="newWindow ? '_blank' : undefined"
-    :rel="newWindow ? 'noopener noreferrer' : undefined"
-    class="cms-button"
-  >
-    {{ text }}<span v-if="newWindow" class="cms-button__new-tab">(opens in a new tab)</span>
-  </NuxtLink>
-</template>
 
 <style lang="scss" scoped src="../../assets/scss/components/partials/CmsButton.scss"></style>

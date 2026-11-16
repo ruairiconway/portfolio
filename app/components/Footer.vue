@@ -1,11 +1,3 @@
-<script setup lang="ts">
-// CMS fields: cms/components/Footer.ts
-const { data: site } = await useSiteSettings()
-const { data: nav } = await useAsyncData('footer-nav', () =>
-  queryCollection('footerNav').first(),
-)
-</script>
-
 <template>
   <footer class="footer">
     <nav v-if="nav?.items.length" aria-label="Footer">
@@ -16,5 +8,13 @@ const { data: nav } = await useAsyncData('footer-nav', () =>
     <p>© {{ new Date().getFullYear() }} {{ site?.title }}<template v-if="nav?.copyright">. {{ nav.copyright }}</template></p>
   </footer>
 </template>
+
+<script setup lang="ts">
+// CMS fields: cms/components/Footer.ts
+const { data: site } = await useSiteSettings()
+const { data: nav } = await useAsyncData('footer-nav', () =>
+  queryCollection('footerNav').first(),
+)
+</script>
 
 <style lang="scss" scoped src="../assets/scss/components/Footer.scss"></style>

@@ -1,3 +1,9 @@
+<template>
+  <article v-if="page">
+    <BlockRenderer :blocks="blocks" />
+  </article>
+</template>
+
 <script setup lang="ts">
 // CMS fields: cms/pages/[...slug].ts
 import type { Block } from '#cms'
@@ -18,9 +24,3 @@ usePageSeo({ title: page.value.title, overrides: page.value.seo })
 // so use the exact generated block types. modules/cms/transform.ts builds the data.
 const blocks = computed(() => (page.value?.blocks ?? []) as Block[])
 </script>
-
-<template>
-  <article v-if="page">
-    <BlockRenderer :blocks="blocks" />
-  </article>
-</template>

@@ -69,19 +69,19 @@ export default defineBlock({
   ],
   [
     paths.vue,
-    `<script setup lang="ts">
-// CMS fields: ${paths.cms}
-import type { ${typeName} } from '#cms' // generated from the CMS fields
-
-defineProps<{ block: ${typeName} }>()
-</script>
-
-<template>
+    `<template>
   <!-- One root element: it gets the block's Anchor ID as its id (BlockRenderer). -->
   <section class="${type}">
     <h2>{{ block.heading }}</h2>
   </section>
 </template>
+
+<script setup lang="ts">
+// CMS fields: ${paths.cms}
+import type { ${typeName} } from '#cms' // generated from the CMS fields
+
+defineProps<{ block: ${typeName} }>()
+</script>
 
 <style lang="scss" scoped src="${relative(dirname(paths.vue), paths.scss)}"></style>
 `,

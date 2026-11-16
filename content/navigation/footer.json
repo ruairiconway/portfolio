@@ -1,4 +1,21 @@
 {
-  "items": [],
-  "copyright": "All rights reserved."
+  "items": [
+    {
+      "text": "Contact",
+      "link": {
+        "type": "page",
+        "page": "/contact",
+        "anchor": ""
+      },
+      "newWindow": false
+    },
+    {
+      "text": "Github",
+      "link": {
+        "type": "external",
+        "url": "https://github.com/ruairiconway"
+      },
+      "newWindow": true
+    }
+  ]
 }

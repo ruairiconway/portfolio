@@ -1,0 +1,84 @@
+@use "sass:map";
+@use "variables" as *;
+@use "functions" as *;
+
+// All typography: the type scale, the type() mixin, and the global type rules.
+//
+//   In a component:   @include type(h2);
+//   Global elements:  body, h1–h3 (global-typography below)
+//   Classes:          .type-h1, .type-small… on any element
+//
+// Like everything in abstracts/, this file outputs no CSS by itself, since it's
+// injected into every component. The global rules are inside a mixin, which
+// main.scss includes once.
+//
+// Fonts are the variables in abstracts/_variables.scss.
+$type-styles: (
+  "h1": (
+    font-family: $redaction-50,
+    font-size: fluid(1rem, 2rem),
+    font-weight: 400,
+    line-height: 1.05,
+    letter-spacing: -0.01em,
+  ),
+  "h2": (
+    font-family: $redaction-50,
+    font-size: 2rem,
+    font-weight: 400,
+    line-height: 1.1,
+  ),
+  "h3": (
+    font-family: $redaction-35,
+    font-size: 1.5rem,
+    font-weight: 400,
+    line-height: 1.2,
+  ),
+  "body": (
+    font-family: $font-body,
+    font-size: 1rem,
+    line-height: 1.6,
+  ),
+  "small": (
+    font-family: $font-body,
+    font-size: 0.875rem,
+    line-height: 1.5,
+  ),
+);
+
+// Applies a style from $type-styles:
+//   .card__title { @include type(h3); }
+@mixin type($name) {
+  $name: "" + $name;
+  @if not map.has-key($type-styles, $name) {
+    @error 'type(): there is no style "#{$name}" in $type-styles. Choose from: #{map.keys($type-styles)}.';
+  }
+  @each $property, $value in map.get($type-styles, $name) {
+    #{$property}: $value;
+  }
+}
+
+// The global type rules, output once by main.scss.
+@mixin global-typography {
+  body {
+    @include type(body);
+  }
+
+  h1 {
+    @include type(h1);
+  }
+
+  h2 {
+    @include type(h2);
+  }
+
+  h3 {
+    @include type(h3);
+  }
+
+  // A class for every style, to use one on any element: <p class="type-small">
+  @each $name, $style in $type-styles {
+    .type-#{$name} {
+      @include type($name);
+    }
+  }
+}
