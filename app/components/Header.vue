@@ -9,13 +9,17 @@
         priority
         class="logo"
       />
-      <template v-else>{{ site?.title }}</template>
+      <p v-else class="type-logo">{{ site?.title }}</p>
     </NuxtLink>
     <nav v-if="nav?.items.length" aria-label="Main">
-      <pre>{{ nav }}</pre>
-      <!-- <NuxtLink v-for="item in nav.items" :key="item.link" :to="item.url">
-        {{ item.label }}
-      </NuxtLink> -->
+      <NuxtLink
+        v-for="(item, i) in nav.items"
+        :key="`header-link-${i}`"
+        :to="item.link?.type == 'external' ? item.link.url : item.link.page"
+        :target="item.newWindow ? '_blank' : '_self'"
+      >
+        {{ item.text }}
+      </NuxtLink>
     </nav>
   </header>
 </template>

@@ -33,6 +33,12 @@ $type-styles: (
     font-weight: 400,
     line-height: 1.2,
   ),
+  "logo": (
+    font-family: $redaction-35,
+    font-size: 1.5rem,
+    font-weight: 400,
+    line-height: 1.2,
+  ),
   "body": (
     font-family: $font-body,
     font-size: 1rem,
@@ -73,6 +79,10 @@ $type-styles: (
 
   h3 {
     @include type(h3);
+  }
+
+  .logo {
+    @include type(logo);
   }
 
   // A class for every style, to use one on any element: <p class="type-small">
